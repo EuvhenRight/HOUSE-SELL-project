@@ -1,0 +1,26 @@
+@import './base.scss';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--element-background-1);
+}
+
+body .mobile-content {
+  display: none;
+}
+
+@media only screen and (max-width: 375px) {
+  body .not-mobile-content {
+    display: none;
+  }
+
+  body .mobile-content {
+    display: flex;
+  }
+}
