@@ -8,8 +8,8 @@ import type { headerMobileLinks } from '../types/types'
 
 const navigationRoutes: headerMobileLinks[] = [
   {
-    name: 'Home',
-    title: 'Home',
+    name: 'Houses',
+    title: 'Houses',
     path: '/',
     icon: Home,
     iconActive: HomeActive

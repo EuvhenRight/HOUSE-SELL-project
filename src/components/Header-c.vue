@@ -4,8 +4,8 @@ import type { headerLinks } from '../types/types'
 
 const navigationRoutes: headerLinks[] = [
   {
-    name: 'Home',
-    title: 'Home',
+    name: 'Houses',
+    title: 'Houses',
     path: '/'
   },
   {

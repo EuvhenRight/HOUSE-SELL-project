@@ -4,7 +4,7 @@ import Header from './components/Header-c.vue'
 import HeaderMobile from './components/Header-mobile.vue'
 import { useMonitorSize } from './utils/monitor-sizes'
 
-const { xs, sm, md, lg, xl } = useMonitorSize()
+const { xs, sm } = useMonitorSize()
 </script>
 
 <template>
