@@ -1,11 +1,13 @@
 <script lang="ts">
+import CartItem from '../components/Cart-item.vue'
 import SearchBar from '../components/Search-bar.vue'
 import SortHouses from '../components/Sort-houses.vue'
 
 export default {
   components: {
     SortHouses,
-    SearchBar
+    SearchBar,
+    CartItem
   }
 }
 </script>
@@ -14,6 +16,7 @@ export default {
   <div>
     <Sort-houses />
     <SearchBar />
+    <CartItem />
     <h1>Home</h1>
   </div>
 </template>
