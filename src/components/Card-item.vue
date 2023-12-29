@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import bathIcon from '../assets/icons/ic_bath@3x.png'
 import bedIcon from '../assets/icons/ic_bed@3x.png'
 import deleteIcon from '../assets/icons/ic_delete@3x.png'
@@ -9,44 +10,50 @@ import imageIcon from '../assets/images/img_placeholder_house@3x.png'
 
 <template>
   <div class="container-card-item">
-    <div class="card-item">
-      <div class="info-block">
-        <img class="card-item-img" :src="imageIcon" alt="imageIcon" />
-        <div class="container-card-info">
-          <div class="house-location">joan Melchior St. 46H</div>
-          <div class="price-info">$500</div>
-          <div class="zip-code-info">1051TS</div>
-          <div class="room-info">
-            <span class="icons"
-              ><img :src="bedIcon" alt="Bed Icon" />
-              <p>1</p></span
-            >
-            <span class="icons"
-              ><img :src="bathIcon" alt="Bath Icon" />
-              <p>1</p></span
-            >
-            <span class="icons"
-              ><img :src="sizeIcon" alt="Size Icon" />
-              <p>120 m2</p></span
-            >
+    <RouterLink to="/house">
+      <div class="card-item">
+        <div class="info-block">
+          <img class="card-item-img" :src="imageIcon" alt="imageIcon" />
+          <div class="container-card-info">
+            <div class="house-location">joan Melchior St. 46H</div>
+            <div class="price-info">$500</div>
+            <div class="zip-code-info">1051TS</div>
+            <div class="room-info">
+              <span class="icons"
+                ><img :src="bedIcon" alt="Bed Icon" />
+                <p>1</p></span
+              >
+              <span class="icons"
+                ><img :src="bathIcon" alt="Bath Icon" />
+                <p>1</p></span
+              >
+              <span class="icons"
+                ><img :src="sizeIcon" alt="Size Icon" />
+                <p>120 m2</p></span
+              >
+            </div>
           </div>
         </div>
+        <div class="container-btn">
+          <button class="btn-tabs">
+            <img :src="editIcon" alt="Edit Icon" />
+          </button>
+          <button class="btn-tabs">
+            <img :src="deleteIcon" alt="Delete Icon" />
+          </button>
+        </div>
       </div>
-      <div class="container-btn">
-        <button class="btn-tabs">
-          <img :src="editIcon" alt="Edit Icon" />
-        </button>
-        <button class="btn-tabs">
-          <img :src="deleteIcon" alt="Delete Icon" />
-        </button>
-      </div>
-    </div>
+    </RouterLink>
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .container-card-item {
   position: relative;
+}
+
+.container-card-item a {
+  text-decoration: none;
 }
 
 .info-block {
@@ -127,6 +134,14 @@ import imageIcon from '../assets/images/img_placeholder_house@3x.png'
 
 .btn-tabs img {
   width: 20px;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.btn-tabs img:hover {
+  opacity: 1;
+  transition: 0.3s ease-in-out;
+  transform: scale(1.1);
 }
 
 @media (max-width: 768px) {

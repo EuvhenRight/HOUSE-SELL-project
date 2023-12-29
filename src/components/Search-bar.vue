@@ -22,16 +22,16 @@ import IconClean from '../assets/icons/ic_clear@3x.png'
   display: flex;
   align-items: center;
 }
+
 .icon-clean {
   position: absolute;
-  right: 0;
-  transform: translate(-50%, 0%);
+  right: 15px;
   width: 20px;
   opacity: 0.5;
 }
 .search-bar-form input {
   width: 450px;
-  padding: 10px 40px 10px 50px;
+  padding: 10px 50px 10px 50px;
   background: var(--element-tertiary-1) url('../assets/icons/ic_search@3x.png') no-repeat 20px
     center;
   background-size: 15px 15px;
@@ -49,7 +49,7 @@ import IconClean from '../assets/icons/ic_clear@3x.png'
   cursor: pointer;
   opacity: 1;
   transition: 0.3s ease-in-out;
-  width: 21px;
+  transform: scale(1.1);
 }
 
 @media (max-width: 768px) {

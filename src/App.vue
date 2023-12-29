@@ -13,9 +13,9 @@ const { xs, sm } = useMonitorSize()
   <main><RouterView /></main>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 main {
-  width: 100%;
   padding-top: 100px;
+  width: 100%;
 }
 </style>

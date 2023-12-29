@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import About from '../page/AboutView.vue'
 import Home from '../page/HomeView.vue'
+import HouseDetails from '../page/HouseDatailsView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -19,6 +20,14 @@ const router = createRouter({
       component: About,
       meta: {
         title: 'About'
+      }
+    },
+    {
+      path: '/house',
+      name: 'HouseDetails',
+      component: HouseDetails,
+      meta: {
+        title: 'House Details'
       }
     }
   ]
