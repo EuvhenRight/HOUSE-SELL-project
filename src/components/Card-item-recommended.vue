@@ -49,6 +49,7 @@ import imageIcon from '../assets/images/img_placeholder_house@3x.png'
 .info-block {
   display: flex;
   align-items: center;
+  font-size: 80%;
 }
 
 .card-item {
@@ -111,5 +112,11 @@ import imageIcon from '../assets/images/img_placeholder_house@3x.png'
 .room-info {
   display: flex;
   align-items: center;
+}
+
+@media (min-width: 992px) and (max-width: 1319px) {
+  .icons {
+    margin-right: 0;
+  }
 }
 </style>

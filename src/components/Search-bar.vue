@@ -13,7 +13,6 @@ import IconClean from '../assets/icons/ic_clear@3x.png'
 
 <style scoped>
 .search-bar-form {
-  margin: 20px 0;
   display: flex;
   align-items: center;
 }
@@ -52,11 +51,10 @@ import IconClean from '../assets/icons/ic_clear@3x.png'
   transform: scale(1.1);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 806px) {
   .wrapper-search-bar {
     width: 100%;
   }
-
   .search-bar-form input {
     width: 100%;
   }

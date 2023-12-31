@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import ArrowBack from '../assets/icons/ic_back_grey@3x.png'
+import { useMonitorSize } from '../utils/monitor-sizes'
+
+const { base, xs, sm } = useMonitorSize()
 </script>
 
 <template>
-  <div class="back-to-pages">
+  <div :class="{ 'back-to-pages': !base && !xs && !sm, 'back-to-pages-mobile': base || xs || sm }">
     <button>
       <img :src="ArrowBack" alt="ArrowBack" />
     </button>
-    <span>Back to overview</span>
+    <span v-if="!base && !xs && !sm">Back to overview</span>
   </div>
 </template>
 
@@ -16,6 +19,32 @@ import ArrowBack from '../assets/icons/ic_back_grey@3x.png'
   padding: 50px 0 30px 0;
   display: flex;
   align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  & button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-right: 12px;
+    opacity: 0.5;
+  }
+
+  & button:hover {
+    opacity: 1;
+    transition: 0.3s ease-in-out;
+    transform: scale(1.1);
+  }
+  & img {
+    width: 20px;
+  }
+}
+
+.back-to-pages-mobile {
+  padding: 0;
+  position: absolute;
+  top: 50px;
+  left: 36px;
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   font-weight: 600;

@@ -3,7 +3,9 @@ import bathIcon from '../assets/icons/ic_bath@3x.png'
 import bedIcon from '../assets/icons/ic_bed@3x.png'
 import constructionIcon from '../assets/icons/ic_construction_date@3x.png'
 import deleteIcon from '../assets/icons/ic_delete@3x.png'
+import deleteWhiteIcon from '../assets/icons/ic_delete_white@3x.png'
 import editIcon from '../assets/icons/ic_edit@3x.png'
+import editWhiteIcon from '../assets/icons/ic_edit_white@3x.png'
 import garageIcon from '../assets/icons/ic_garage@3x.png'
 import locationIcon from '../assets/icons/ic_location@3x.png'
 import priceIcon from '../assets/icons/ic_price@3x.png'
@@ -11,11 +13,14 @@ import sizeIcon from '../assets/icons/ic_size@3x.png'
 import HouseImage from '../assets/images/img_placeholder_house@3x.png'
 import BackToPages from '../components/Back-to-pages.vue'
 import CardItemRecommended from '../components/Card-item-recommended.vue'
+import { useMonitorSize } from '../utils/monitor-sizes'
+
+const { base, xs, sm } = useMonitorSize()
 </script>
 
 <template>
   <div class="container-house-details">
-    <div>
+    <div class="wrapper-house-details">
       <BackToPages />
       <div class="house-details-main">
         <img class="house-details-img" :src="HouseImage" alt="HouseImage" />
@@ -24,10 +29,10 @@ import CardItemRecommended from '../components/Card-item-recommended.vue'
             <div class="house-address">Joan Melchior St. 46H</div>
             <div class="container-btn">
               <button class="btn-tabs">
-                <img :src="editIcon" alt="Edit Icon" />
+                <img :src="!base && !xs && !sm ? editIcon : editWhiteIcon" alt="Edit Icon" />
               </button>
               <button class="btn-tabs">
-                <img :src="deleteIcon" alt="Delete Icon" />
+                <img :src="!base && !xs && !sm ? deleteIcon : deleteWhiteIcon" alt="Delete Icon" />
               </button>
             </div>
           </div>
@@ -90,8 +95,6 @@ import CardItemRecommended from '../components/Card-item-recommended.vue'
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 800px;
-  background-color: var(--element-background-2);
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   font-weight: 600;
@@ -102,11 +105,11 @@ import CardItemRecommended from '../components/Card-item-recommended.vue'
   height: 550px;
   object-fit: cover;
   object-position: center;
-  margin-bottom: 20px;
 }
 .house-details-content {
   position: relative;
-  margin: 20px 30px 20px 30px;
+  padding: 40px 30px 20px 30px;
+  background-color: var(--element-background-2);
 }
 .wrapper-house-address {
   display: flex;
@@ -189,5 +192,57 @@ import CardItemRecommended from '../components/Card-item-recommended.vue'
 .house-recommended-container {
   width: 100%;
   padding: 100px 0 0 100px;
+}
+
+@media (min-width: 992px) and (max-width: 1319px) {
+  .container-house-details {
+    width: 100%;
+    padding: 0 20px;
+  }
+  .house-details-img {
+    width: auto;
+    height: 395px;
+  }
+
+  .house-recommended-container {
+    padding: 100px 0 0 50px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .container-house-details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .house-details-main {
+    width: 100%;
+  }
+
+  .house-details-img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .house-details-content {
+    border-top-left-radius: 42px;
+    border-top-right-radius: 42px;
+    margin-top: -42px;
+  }
+  .house-recommended-container {
+    padding: 36px 30px 0 30px;
+  }
+  .container-btn {
+    position: absolute;
+    top: 50px;
+    right: 36px;
+  }
+  .house-details-content {
+    position: static;
+  }
+
+  .btn-tabs img {
+    opacity: 1;
+  }
 }
 </style>

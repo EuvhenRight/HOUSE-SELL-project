@@ -9,9 +9,9 @@
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .container-sort {
-  width: 100%;
+  margin: 20px 0;
 }
 .sort-list {
   display: flex;
@@ -42,7 +42,7 @@ li.active-list {
   background-color: var(--element-primary);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 806px) {
   .sort-list li {
     width: 100%;
   }

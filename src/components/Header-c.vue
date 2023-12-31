@@ -18,7 +18,7 @@ const navigationRoutes: headerLinks[] = [
 
 <template>
   <header class="header-nav">
-    <div class="container">
+    <div class="container-header">
       <img src="/dtt_logo.png" alt="logo" />
 
       <nav class="nav-links">
@@ -44,14 +44,15 @@ const navigationRoutes: headerLinks[] = [
   font-family: 'Montserrat', sans-serif;
   height: 100px;
   z-index: 999;
+  box-shadow: 0px 5px 10px var(--element-tertiary-1);
 
   & img {
     width: 150px;
   }
 }
 
-.container {
-  width: 1280px;
+.container-header {
+  width: 1320px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -67,6 +68,18 @@ const navigationRoutes: headerLinks[] = [
   &.active {
     color: var(--text-primary);
     font-weight: 700;
+  }
+}
+@media (min-width: 992px) and (max-width: 1319px) {
+  .container-header {
+    width: 100%;
+    padding: 0 20px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .container-header {
+    padding: 0 20px;
   }
 }
 </style>

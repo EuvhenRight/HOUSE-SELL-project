@@ -3,18 +3,18 @@ import IconPlusMobile from '../assets/icons/ic_plus_grey@3x.png'
 import IconPlus from '../assets/icons/ic_plus_white@3x.png'
 import { useMonitorSize } from '../utils/monitor-sizes'
 
-const { xs, sm } = useMonitorSize()
+const { base, xs, sm } = useMonitorSize()
 </script>
 
 <template>
-  <button v-if="!xs && !sm" class="create-btn">
+  <button v-if="!base && !xs && !sm" class="create-btn">
     <span>
       <img :src="IconPlus" alt="IconPlus" />
     </span>
     <span class="create-btn-text">CREATE NEW</span>
   </button>
   <!-- Mobile View -->
-  <button v-if="xs || sm" class="create-btn-mobile">
+  <button v-if="base || xs || sm" class="create-btn-mobile">
     <span>
       <img :src="IconPlusMobile" alt="IconPlusMobile" />
     </span>
@@ -53,11 +53,18 @@ const { xs, sm } = useMonitorSize()
     margin-right: 20px;
   }
 }
-
 .create-btn-text {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 18px;
   color: var(--element-background-2);
+}
+
+@media (max-width: 1024px) {
+  .create-btn-mobile {
+    & img {
+      margin: 0;
+    }
+  }
 }
 </style>

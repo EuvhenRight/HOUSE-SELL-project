@@ -56,6 +56,7 @@ const navigationRoutes: headerMobileLinks[] = [
   bottom: 0;
   z-index: 999;
   align-items: center;
+  box-shadow: 0px -5px 10px var(--element-tertiary-1);
 
   & img {
     width: 2rem;
