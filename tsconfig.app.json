@@ -3,6 +3,7 @@
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.scss"],
   "exclude": ["node_modules"],
   "compilerOptions": {
+    "types": ["vite/client"],
     "importsNotUsedAsValues": "remove",
     "preserveValueImports": false,
     "composite": true,

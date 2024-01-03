@@ -2,8 +2,9 @@
   "compilerOptions": {
     "composite": true,
     "target": "esnext",
+    "types": ["node", "vite/client"],
     "module": "esnext",
-    "lib": ["dom", "esnext"],
+    "lib": ["dom", "esnext", "WebWorker"],
     "strict": true,
     "noImplicitAny": false,
     "esModuleInterop": true,

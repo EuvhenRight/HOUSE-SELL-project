@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import emptyHousesImg from '../assets/images/img_empty_houses@3x.png'
 import CardItem from '../components/Card-item.vue'
 import CreateNewBtn from '../components/Create-new-btn.vue'
@@ -11,7 +12,7 @@ import SortHouses from '../components/Sort-houses.vue'
     <section class="home-view-top">
       <div class="container-search-view">
         <h2>Houses</h2>
-        <CreateNewBtn />
+        <RouterLink to="/new_listing"> <CreateNewBtn /></RouterLink>
       </div>
       <div class="container-sort-view">
         <SearchBar />
@@ -56,6 +57,9 @@ h2 {
 .container-search-view {
   display: flex;
   justify-content: space-between;
+}
+.container-search-view a {
+  text-decoration: none;
 }
 .container-empty-houses {
   display: flex;
