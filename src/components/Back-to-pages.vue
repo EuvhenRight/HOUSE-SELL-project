@@ -8,7 +8,7 @@ const { base, xs, sm } = useMonitorSize()
 <template>
   <div :class="{ 'back-to-pages': !base && !xs && !sm, 'back-to-pages-mobile': base || xs || sm }">
     <button>
-      <img :src="ArrowBack" alt="ArrowBack" />
+      <img :src="ArrowBack" alt="ArrowBack" @click="$router.go(-1)" />
     </button>
     <span v-if="!base && !xs && !sm">Back to overview</span>
   </div>

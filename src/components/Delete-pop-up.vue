@@ -8,7 +8,7 @@
         <p>Are you sure you want to delete this listing?</p>
         <p>This action cannot be undone.</p>
         <button class="delete-submit-button" type="submit">YES, DELETE</button>
-        <button class="delete-go-back-button" type="button">GO BACK</button>
+        <button class="delete-go-back-button" type="button" @click="$router.go(-1)">GO BACK</button>
       </form>
     </div>
   </div>

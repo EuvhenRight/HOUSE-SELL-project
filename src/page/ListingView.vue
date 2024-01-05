@@ -3,7 +3,6 @@ import BackToPages from '../components/Back-to-pages.vue'
 import DynamicForm from '../components/Dynamic-form.vue'
 import { formSchema } from '../utils/form-scheme'
 </script>
-
 <template>
   <div class="background-listing">
     <div class="container-listing-view">
