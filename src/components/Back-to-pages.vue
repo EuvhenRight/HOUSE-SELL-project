@@ -43,8 +43,8 @@ const { base, xs, sm } = useMonitorSize()
 .back-to-pages-mobile {
   padding: 0;
   position: absolute;
-  top: 50px;
-  left: 36px;
+  top: 46px;
+  left: 22px;
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   font-weight: 600;

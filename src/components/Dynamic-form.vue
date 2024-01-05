@@ -72,7 +72,14 @@ const removeImage = () => {
       <!-- File Image input with icon -->
       <div v-if="type === 'file'">
         <label :for="name" class="file-input" style="position: relative">
-          <button v-if="!newImageLink" class="file-input-button" type="button" :id="name">
+          <!-- Upload image -->
+          <button
+            v-if="!newImageLink"
+            class="file-input-button"
+            type="button"
+            :id="name"
+            :class="{ 'input-error': errors[name] }"
+          >
             <img :src="uploadIcon" alt="Upload" />
           </button>
           <img
@@ -109,6 +116,7 @@ const removeImage = () => {
 // the main layout for the dynamic form
 .dynamic-form {
   width: 400px;
+  margin-top: 30px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 2fr 1fr;
@@ -185,7 +193,7 @@ select {
   cursor: pointer;
 }
 
-select::invalid,
+select:invalid,
 select option[value=''] {
   color: var(--element-tertiary-2);
 }
@@ -201,6 +209,7 @@ select option {
   font-style: italic;
   margin-top: 7px;
 }
+// the inputs for the dynamic form
 .container-inputs {
   display: flex;
   flex-direction: column;
@@ -237,7 +246,23 @@ select option {
   & .input-error {
     border: 1px solid var(--element-primary);
   }
-  input::placeholder {
+  // the error message for the input red color
+  & .input-error::placeholder {
+    color: var(--element-primary);
+  }
+  & .input-error:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: var(--element-primary);
+  }
+  & .input-error::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: var(--element-primary);
+  }
+  // the error message for the textarea red color
+  & textarea.input-error::placeholder {
+    color: var(--element-primary);
+  }
+  & input::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: var(--element-tertiary-2);
     opacity: 1; /* Firefox */
@@ -322,5 +347,30 @@ select option {
   right: 0;
   top: auto;
   transform: translate(13px, -10px);
+}
+
+@media (max-width: 992px) {
+  .dynamic-form {
+    width: 100%;
+    grid-template-areas:
+      'streetName streetName'
+      'houseNumber numberAddition'
+      'zip zip'
+      'city city'
+      'image image'
+      'price price'
+      'size hasGarage'
+      'bedrooms bathrooms'
+      'constructionYear constructionYear'
+      'description description'
+      'button button';
+  }
+  .post-btn {
+    width: 100%;
+    font-size: 12px;
+  }
+  .container-inputs {
+    font-size: 12px;
+  }
 }
 </style>

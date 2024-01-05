@@ -38,9 +38,11 @@ import imageIcon from '../assets/images/img_placeholder_house@3x.png'
           <button class="btn-tabs">
             <img :src="editIcon" alt="Edit Icon" />
           </button>
-          <button class="btn-tabs">
-            <img :src="deleteIcon" alt="Delete Icon" />
-          </button>
+          <RouterLink to="/delete_house">
+            <button class="btn-tabs">
+              <img :src="deleteIcon" alt="Delete Icon" />
+            </button>
+          </RouterLink>
         </div>
       </div>
     </RouterLink>

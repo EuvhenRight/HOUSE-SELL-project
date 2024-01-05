@@ -14,6 +14,7 @@ import HouseImage from '../assets/images/img_placeholder_house@3x.png'
 import BackToPages from '../components/Back-to-pages.vue'
 import CardItemRecommended from '../components/Card-item-recommended.vue'
 import { useMonitorSize } from '../utils/monitor-sizes'
+import { RouterLink } from 'vue-router'
 
 const { base, xs, sm } = useMonitorSize()
 </script>
@@ -31,9 +32,14 @@ const { base, xs, sm } = useMonitorSize()
               <button class="btn-tabs">
                 <img :src="!base && !xs && !sm ? editIcon : editWhiteIcon" alt="Edit Icon" />
               </button>
-              <button class="btn-tabs">
-                <img :src="!base && !xs && !sm ? deleteIcon : deleteWhiteIcon" alt="Delete Icon" />
-              </button>
+              <RouterLink to="/delete_house">
+                <button class="btn-tabs">
+                  <img
+                    :src="!base && !xs && !sm ? deleteIcon : deleteWhiteIcon"
+                    alt="Delete Icon"
+                  />
+                </button>
+              </RouterLink>
             </div>
           </div>
           <div class="house-details-location">
