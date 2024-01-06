@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import uploadIcon from '../assets/icons/ic_upload@3x.png'
 import clearWhiteIcon from '../assets/icons/ic_clear_white@3x.png'
 const props = defineProps(['schema'])
-
+console.log(props)
 const imageData = ref<string | null>(null)
 const newImage = ref<string | null>(null)
 const newImageLink = ref<string | null>(null)
@@ -14,7 +14,6 @@ const uploadImage = (e: any) => {
   if (file) {
     newImage.value = file
     newImageLink.value = URL.createObjectURL(file)
-    console.log(newImageLink.value)
   }
 }
 

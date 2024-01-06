@@ -1,10 +1,32 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed, onMounted } from 'vue'
+import { useHousesStore } from '../stores/store'
+
+const houseStore = useHousesStore()
+onMounted(() => {
+  houseStore.sortHousesByPrice()
+})
+
+const sort = computed(() => houseStore.sortHousesByPrice())
+</script>
 
 <template>
   <div class="container-sort">
     <ul class="sort-list">
-      <li class="price-list active-list">Price</li>
-      <li class="size-list">Size</li>
+      <li
+        @click="houseStore.sortHousesByPrice"
+        class="price-list"
+        :class="{ 'active-list': houseStore.sortedBy }"
+      >
+        Price
+      </li>
+      <li
+        @click="houseStore.sortHousesBySize"
+        class="size-list"
+        :class="{ 'active-list': !houseStore.sortedBy }"
+      >
+        Size
+      </li>
     </ul>
   </div>
 </template>

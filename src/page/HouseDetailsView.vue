@@ -13,21 +13,43 @@ import sizeIcon from '../assets/icons/ic_size@3x.png'
 import HouseImage from '../assets/images/img_placeholder_house@3x.png'
 import BackToPages from '../components/Back-to-pages.vue'
 import CardItemRecommended from '../components/Card-item-recommended.vue'
-import { useMonitorSize } from '../utils/monitor-sizes'
-import { RouterLink } from 'vue-router'
 
+import { useMonitorSize } from '../utils/monitor-sizes'
+import { RouterLink, useRoute } from 'vue-router'
+import { HouseData } from '../types/types'
+import { useHousesStore } from '../stores/store'
+import { onMounted, reactive, ref } from 'vue'
+
+const house = ref<HouseData | null>(null)
+
+// size monitor view
 const { base, xs, sm } = useMonitorSize()
+const housesStore = useHousesStore()
+const route = useRoute()
+const rawId = route.params.id as string
+// Assuming you have 'id' available
+const id = parseInt(rawId, 10)
+const data = ref<HouseData>()
+
+onMounted(async () => {
+  await housesStore.getHouseById(id)
+  data.value = housesStore.houseData
+})
+
+function convertPrice(price) {
+  return new Intl.NumberFormat('en-DE').format(price)
+}
 </script>
 
 <template>
   <div class="container-house-details">
     <div class="wrapper-house-details">
       <BackToPages />
-      <div class="house-details-main">
-        <img class="house-details-img" :src="HouseImage" alt="HouseImage" />
+      <div v-for="(house, index) in data" :key="index" class="house-details-main">
+        <img class="house-details-img" :src="house?.image" alt="HouseImage" />
         <div class="house-details-content">
           <div class="wrapper-house-address">
-            <div class="house-address">Joan Melchior St. 46H</div>
+            <div class="house-address">{{ house?.location.street }}</div>
             <div class="container-btn">
               <button class="btn-tabs">
                 <img :src="!base && !xs && !sm ? editIcon : editWhiteIcon" alt="Edit Icon" />
@@ -44,41 +66,37 @@ const { base, xs, sm } = useMonitorSize()
           </div>
           <div class="house-details-location">
             <span><img :src="locationIcon" alt="Location Icon" /></span>
-            1051TS Amsterdam
+            {{ house?.location.street }} {{ house?.location.zip }}
           </div>
           <div class="house-details-info">
             <div>
               <span class="house-details-icons"
                 ><img :src="priceIcon" alt="Price Icon" class="house-details-icons" />
-                <p class="details-info">$500.000</p></span
+                <p class="details-info">{{ convertPrice(house?.price) }}</p></span
               >
               <span><img :src="sizeIcon" alt="Size Icon" class="house-details-icons" /></span>
-              <p class="details-info">100 m2</p>
+              <p class="details-info">{{ house?.size }}</p>
               <span
                 ><img :src="constructionIcon" alt="Construction Icon" class="house-details-icons"
               /></span>
-              <p class="details-info">Built in 1990</p>
+              <p class="details-info">{{ house?.constructionYear }}</p>
             </div>
             <div>
               <span class="house-details-icons"
                 ><img :src="bedIcon" alt="Bed Icon" />
-                <p class="details-info">2</p></span
+                <p class="details-info">{{ house?.rooms.bedrooms }}</p></span
               >
               <span class="house-details-icons"
                 ><img :src="bathIcon" alt="Bath Icon" />
-                <p class="details-info">1</p></span
+                <p class="details-info">{{ house?.rooms.bathrooms }}</p></span
               >
               <span class="house-details-icons"
                 ><img :src="garageIcon" alt="Garage Icon" />
-                <p class="details-info">Yes</p></span
+                <p class="details-info">{{ house?.hasGarage }}</p></span
               >
             </div>
           </div>
-          <div class="house-description">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est, numquam obcaecati, eaque
-            mollitia et, placeat voluptatibus nostrum rerum ipsa assumenda aperiam natus amet
-            commodi voluptate eos? Dicta maiores in fuga.
-          </div>
+          <div class="house-description">{{ house?.description }}</div>
         </div>
       </div>
     </div>

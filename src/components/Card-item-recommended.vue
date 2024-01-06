@@ -8,7 +8,7 @@ import imageIcon from '../assets/images/img_placeholder_house@3x.png'
 
 <template>
   <div class="container-card-item">
-    <RouterLink to="/house">
+    <RouterLink to="`/house/${props.house?.id}`">
       <div class="card-item">
         <div class="info-block">
           <img class="card-item-img" :src="imageIcon" alt="imageIcon" />

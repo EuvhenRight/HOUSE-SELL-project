@@ -1,10 +1,28 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
-import emptyHousesImg from '../assets/images/img_empty_houses@3x.png'
 import CardItem from '../components/Card-item.vue'
 import CreateNewBtn from '../components/Create-new-btn.vue'
 import SearchBar from '../components/Search-bar.vue'
 import SortHouses from '../components/Sort-houses.vue'
+
+import { useHousesStore } from '../stores/store'
+import { HouseData } from '../types/types'
+import { onMounted, ref, watch } from 'vue'
+import { RouterLink } from 'vue-router'
+
+const housesStore = useHousesStore()
+const data = ref<HouseData[]>([])
+
+watch(
+  () => housesStore.housesData,
+  (newData) => {
+    data.value = newData
+  }
+)
+
+onMounted(async () => {
+  await housesStore.getDataHouses()
+  data.value = housesStore?.housesData
+})
 </script>
 
 <template>
@@ -20,9 +38,13 @@ import SortHouses from '../components/Sort-houses.vue'
       </div>
     </section>
     <section class="container-home-main">
-      <CardItem />
+      <ul class="list-houses" v-auto-animate>
+        <li v-for="(house, index) in data" :key="index">
+          <CardItem :house="house" />
+        </li>
+      </ul>
     </section>
-    <section class="container-home-search">
+    <!-- <section class="container-home-search">
       <h2>Results searching</h2>
       <CardItem />
       <div class="container-empty-houses">
@@ -30,7 +52,7 @@ import SortHouses from '../components/Sort-houses.vue'
         <p>No results found</p>
         <p>Please try another keyword.</p>
       </div>
-    </section>
+    </section> -->
   </div>
 </template>
 
@@ -60,6 +82,10 @@ h2 {
 }
 .container-search-view a {
   text-decoration: none;
+}
+
+.list-houses li {
+  list-style: none;
 }
 .container-empty-houses {
   display: flex;

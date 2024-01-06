@@ -5,31 +5,38 @@ import bedIcon from '../assets/icons/ic_bed@3x.png'
 import deleteIcon from '../assets/icons/ic_delete@3x.png'
 import editIcon from '../assets/icons/ic_edit@3x.png'
 import sizeIcon from '../assets/icons/ic_size@3x.png'
-import imageIcon from '../assets/images/img_placeholder_house@3x.png'
+// import imageIcon from '../assets/images/img_placeholder_house@3x.png'
+import { HouseData } from '../types/types'
+
+const props = defineProps<{ house: HouseData }>()
+
+function convertPrice(price) {
+  return new Intl.NumberFormat('en-DE').format(price)
+}
 </script>
 
 <template>
   <div class="container-card-item">
-    <RouterLink to="/house">
+    <RouterLink :to="`/house/${props.house?.id}`">
       <div class="card-item">
         <div class="info-block">
-          <img class="card-item-img" :src="imageIcon" alt="imageIcon" />
+          <img class="card-item-img" :src="props.house?.image" alt="imageIcon" />
           <div class="container-card-info">
-            <div class="house-location">joan Melchior St. 46H</div>
-            <div class="price-info">$500</div>
-            <div class="zip-code-info">1051TS</div>
+            <div class="house-location">{{ props.house?.location.street }}</div>
+            <div class="price-info">€ {{ convertPrice(props.house?.price) }}</div>
+            <div class="zip-code-info">{{ props.house?.location.zip }}</div>
             <div class="room-info">
               <span class="icons"
                 ><img :src="bedIcon" alt="Bed Icon" />
-                <p>1</p></span
+                <p>{{ props.house?.rooms.bedrooms }}</p></span
               >
               <span class="icons"
                 ><img :src="bathIcon" alt="Bath Icon" />
-                <p>1</p></span
+                <p>{{ props.house?.rooms.bathrooms }}</p></span
               >
               <span class="icons"
                 ><img :src="sizeIcon" alt="Size Icon" />
-                <p>120 m2</p></span
+                <p>{{ props.house?.size }}</p></span
               >
             </div>
           </div>
