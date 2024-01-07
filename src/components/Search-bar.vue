@@ -1,12 +1,29 @@
 <script setup lang="ts">
 import IconClean from '../assets/icons/ic_clear@3x.png'
+import { useHousesStore } from '../stores/store'
+const housesStore = useHousesStore()
+// delete value in search bar
+const inputClear = () => {
+  housesStore.searchValue = null
+  housesStore.filteredHouses
+}
+// search
+const inputSearch = () => {
+  housesStore.filteredHouses
+}
 </script>
 
 <template>
-  <form class="search-bar-form" autocomplete="off">
+  <form class="search-bar-form" autocomplete="off" @submit.prevent="inputSearch">
     <div class="wrapper-search-bar">
-      <input name="searchBar" type="text" placeholder="Search for a house" />
-      <img class="icon-clean" :src="IconClean" />
+      <input
+        v-model.trim="housesStore.searchValue"
+        name="searchBar"
+        type="text"
+        placeholder="Search for a house"
+        @keyup="inputSearch"
+      />
+      <img v-if="housesStore.searchValue" @click="inputClear" class="icon-clean" :src="IconClean" />
     </div>
   </form>
 </template>

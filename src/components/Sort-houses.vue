@@ -1,13 +1,7 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
 import { useHousesStore } from '../stores/store'
 
 const houseStore = useHousesStore()
-onMounted(() => {
-  houseStore.sortHousesByPrice()
-})
-
-const sort = computed(() => houseStore.sortHousesByPrice())
 </script>
 
 <template>

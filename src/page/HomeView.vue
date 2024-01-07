@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import emptyHousesImg from '../assets/images/img_empty_houses@3x.png'
 import CardItem from '../components/Card-item.vue'
 import CreateNewBtn from '../components/Create-new-btn.vue'
 import SearchBar from '../components/Search-bar.vue'
@@ -6,23 +7,37 @@ import SortHouses from '../components/Sort-houses.vue'
 
 import { useHousesStore } from '../stores/store'
 import { HouseData } from '../types/types'
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 
 const housesStore = useHousesStore()
+// REACTIVE DATA
 const data = ref<HouseData[]>([])
 
+// WATCH FOR CHANGES
 watch(
   () => housesStore.housesData,
   (newData) => {
     data.value = newData
   }
 )
-
 onMounted(async () => {
   await housesStore.getDataHouses()
   data.value = housesStore?.housesData
 })
+// WATCH FOR CHANGES
+watch(
+  () => housesStore.searchData,
+  (newData) => {
+    data.value = newData
+  }
+)
+// COMPUTED FUNCTION CHANGES WHEN SEARCH VALUE CHANGES AND COUNT OF HOUSES
+const resultString = computed(() =>
+  housesStore.searchHousesCount === 1
+    ? `${housesStore.searchHousesCount} result found`
+    : `${housesStore.searchHousesCount} results found`
+)
 </script>
 
 <template>
@@ -37,22 +52,31 @@ onMounted(async () => {
         <Sort-houses />
       </div>
     </section>
-    <section class="container-home-main">
+    <!-- DEFAULT VIEW WHEN NO SEARCH -->
+    <section class="container-home-main" v-if="!housesStore.searchValue">
       <ul class="list-houses" v-auto-animate>
         <li v-for="(house, index) in data" :key="index">
           <CardItem :house="house" />
         </li>
       </ul>
     </section>
-    <!-- <section class="container-home-search">
-      <h2>Results searching</h2>
-      <CardItem />
-      <div class="container-empty-houses">
+    <!-- SEARCH VIEW WHEN SEARCHING -->
+    <section v-if="housesStore.searchValue" class="container-home-search">
+      <div v-if="housesStore.searchHousesCount > 0">
+        <h2>{{ resultString }}</h2>
+        <ul class="list-houses" v-auto-animate>
+          <li v-for="(house, index) in housesStore.searchData" :key="index">
+            <CardItem :house="house" />
+          </li>
+        </ul>
+      </div>
+      <!-- EMPTY HOUSES VIEW -->
+      <div v-if="housesStore.searchHousesCount === 0" class="container-empty-houses">
         <img :src="emptyHousesImg" alt="Not Found" />
         <p>No results found</p>
         <p>Please try another keyword.</p>
       </div>
-    </section> -->
+    </section>
   </div>
 </template>
 

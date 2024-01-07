@@ -63,7 +63,7 @@ const removeImage = () => {
         v-if="type == 'select'"
       >
         <select :as="as" :id="name" :name="name" v-bind="attrs">
-          <option value="" selected disabled hidden class="default-select-option">Select</option>
+          <option value="" selected disabled class="default-select-option">Select</option>
           <option value="true">Yes</option>
           <option value="false">No</option>
         </select>

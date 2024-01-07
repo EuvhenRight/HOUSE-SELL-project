@@ -7,16 +7,16 @@ export const useHousesStore = defineStore('HouseStore', {
     return {
       housesData: [] as HouseData[],
       houseData: {} as HouseData,
-      sortedBy: null as boolean | null,
+      sortedBy: null as boolean | null, // triggered by price or size
       searchData: [] as HouseData[],
-      searchQuery: '' as string
+      searchValue: null as string | null // Search value input field
     }
   },
   getters: {
     searchHousesCount: (state) => state.searchData.length,
     filteredHouses: (state) => {
       const searchData = state.housesData.filter((house) => {
-        const searchQueryLower = state.searchQuery.toLowerCase()
+        const searchQueryLower = state.searchValue || ''.toLowerCase()
 
         const matchesCondition = (property: string, value: HouseData[keyof HouseData]) => {
           return value.toString().toLowerCase().includes(searchQueryLower)
@@ -39,6 +39,7 @@ export const useHousesStore = defineStore('HouseStore', {
       try {
         const response = await apiService<HouseData[]>(import.meta.env.VITE_API_MAIN_URL, 'GET')
         this.housesData = response.data || []
+        this.sortHousesByPrice()
       } catch (error) {
         console.error(error)
       }
