@@ -17,7 +17,7 @@ function convertPrice(price) {
 
 <template>
   <div class="container-card-item">
-    <RouterLink :to="`/house/${props.house?.id}`">
+    <RouterLink :to="`/house-details/${props.house?.id}`">
       <div class="card-item">
         <div class="info-block">
           <img class="card-item-img" :src="props.house?.image" alt="imageIcon" />
@@ -59,17 +59,18 @@ function convertPrice(price) {
 <style lang="scss" scoped>
 .container-card-item {
   position: relative;
+  & :hover {
+    transition: 0.2s ease-in-out;
+    transform: scale(1.02);
+  }
 }
-
 .container-card-item a {
   text-decoration: none;
 }
-
 .info-block {
   display: flex;
   align-items: center;
 }
-
 .card-item {
   display: flex;
   align-items: flex-start;

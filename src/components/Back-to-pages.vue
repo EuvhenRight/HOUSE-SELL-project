@@ -1,14 +1,22 @@
 <script setup lang="ts">
 import ArrowBack from '../assets/icons/ic_back_grey@3x.png'
+import ArrowWithWhite from '../assets/icons/ic_back_white@3x.png'
+import { useRouter } from 'vue-router'
 import { useMonitorSize } from '../utils/monitor-sizes'
 
 const { base, xs, sm } = useMonitorSize()
+const router = useRouter()
+
+const currentArrow = () => {
+  return router.currentRoute.value.name === 'HouseDetails' ? ArrowWithWhite : ArrowBack
+}
 </script>
 
 <template>
   <div :class="{ 'back-to-pages': !base && !xs && !sm, 'back-to-pages-mobile': base || xs || sm }">
     <button>
-      <img :src="ArrowBack" alt="ArrowBack" @click="$router.go(-1)" />
+      <img v-if="base || xs || sm" :src="currentArrow()" alt="ArrowBack" @click="$router.go(-1)" />
+      <img v-else :src="ArrowBack" alt="ArrowBack" @click="$router.go(-1)" />
     </button>
     <span v-if="!base && !xs && !sm">Back to overview</span>
   </div>
@@ -53,16 +61,13 @@ const { base, xs, sm } = useMonitorSize()
     border: none;
     cursor: pointer;
     margin-right: 12px;
-    opacity: 0.5;
   }
-
   & button:hover {
-    opacity: 1;
     transition: 0.3s ease-in-out;
     transform: scale(1.1);
   }
   & img {
-    width: 20px;
+    width: 26px;
   }
 }
 </style>

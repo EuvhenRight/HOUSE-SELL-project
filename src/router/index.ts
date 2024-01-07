@@ -25,7 +25,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/house/:id',
+      path: '/house-details/:id',
       name: 'HouseDetails',
       component: HouseDetails,
       meta: {
