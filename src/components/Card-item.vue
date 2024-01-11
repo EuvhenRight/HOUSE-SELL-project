@@ -5,7 +5,6 @@ import bedIcon from '../assets/icons/ic_bed@3x.png'
 import deleteIcon from '../assets/icons/ic_delete@3x.png'
 import editIcon from '../assets/icons/ic_edit@3x.png'
 import sizeIcon from '../assets/icons/ic_size@3x.png'
-// import imageIcon from '../assets/images/img_placeholder_house@3x.png'
 import { HouseData } from '../types/types'
 
 const props = defineProps<{ house: HouseData }>()
@@ -41,7 +40,7 @@ function convertPrice(price) {
             </div>
           </div>
         </div>
-        <div class="container-btn">
+        <div v-if="props.house?.madeByMe" class="container-btn">
           <button class="btn-tabs">
             <img :src="editIcon" alt="Edit Icon" />
           </button>

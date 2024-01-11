@@ -1,15 +1,26 @@
 <script setup lang="ts">
-import { ErrorMessage, Field, Form } from 'vee-validate'
-import { ref } from 'vue'
 import uploadIcon from '../assets/icons/ic_upload@3x.png'
 import clearWhiteIcon from '../assets/icons/ic_clear_white@3x.png'
-const props = defineProps(['schema'])
-console.log(props)
+
+import { ref, defineProps, defineEmits } from 'vue'
+import { ErrorMessage, Field, Form } from 'vee-validate'
+import { validationFieldsSchema } from '../utils/validation-schema'
+import { HouseListing } from '../types/types'
+
+defineProps<{ valuesForm: HouseListing }>()
+const emit = defineEmits(['on-submit'])
+
+const handleSubmit = (values) => {
+  emit('on-submit', values)
+}
+
 const imageData = ref<string | null>(null)
-const newImage = ref<string | null>(null)
+const newImage = ref<HTMLInputElement | null>(null)
 const newImageLink = ref<string | null>(null)
 
-const uploadImage = (e: any) => {
+// const fileInputClick = ref<HTMLInputElement | null>(null)
+
+const uploadImage = (e) => {
   const file = e.target.files[0]
   if (file) {
     newImage.value = file
@@ -25,89 +36,193 @@ const removeImage = () => {
 </script>
 
 <template>
-  <Form class="dynamic-form" v-slot="{ errors }">
-    <div
-      class="container-inputs"
-      :id="name"
-      v-for="{ as, name, label, children, type, rules, ...attrs } in schema.fields"
-      :key="name"
-    >
-      <label :for="name">{{ label }}</label>
-      <!-- All input types -->
+  <Form
+    @submit="handleSubmit"
+    :validation-schema="validationFieldsSchema"
+    :initial-values="valuesForm"
+    class="dynamic-form"
+    v-slot="{ meta, setFieldValue, errors }"
+  >
+    <!--STREET NAME INPUT-->
+    <div class="container-input" id="streetName">
+      <label for="streetName">Street Name*</label>
       <Field
-        :id="name"
-        :as="as"
-        :name="name"
-        :rules="rules"
-        v-bind="attrs"
-        :class="{ 'input-error': errors[name] }"
-        v-if="type !== 'select' && type !== 'file'"
-      >
-        <template v-if="children && children.length">
-          <component
-            v-for="({ tag, text, ...childAttrs }, idx) in children"
-            :key="idx"
-            :is="tag"
-            v-bind="childAttrs"
-          >
-            {{ text }}
-          </component>
-        </template>
-      </Field>
-      <!-- Select hasGarage input -->
+        id="streetName"
+        type="text"
+        name="streetName"
+        placeholder="Enter the street name"
+        :class="{ 'input-error': errors.streetName }"
+      />
+      <ErrorMessage name="streetName" class="error-message" />
+    </div>
+    <!-- HOUSE NUMBER INPUT -->
+    <div class="container-input" id="houseNumber">
+      <label for="houseNumber">House Number*</label>
       <Field
-        :id="name"
-        :name="name"
-        :rules="rules"
-        :class="{ 'input-error': errors[name] }"
-        v-if="type == 'select'"
-      >
-        <select :as="as" :id="name" :name="name" v-bind="attrs">
-          <option value="" selected disabled class="default-select-option">Select</option>
-          <option value="true">Yes</option>
-          <option value="false">No</option>
-        </select>
-      </Field>
-      <!-- File Image input with icon -->
-      <div v-if="type === 'file'">
-        <label :for="name" class="file-input" style="position: relative">
-          <!-- Upload image -->
-          <button
-            v-if="!newImageLink"
-            class="file-input-button"
-            type="button"
-            :id="name"
-            :class="{ 'input-error': errors[name] }"
-          >
-            <img :src="uploadIcon" alt="Upload" />
-          </button>
-          <img
-            v-if="newImageLink"
-            :src="imageData || newImageLink"
-            class="uploaded-image"
-            alt="Upload"
-          />
+        id="houseNumber"
+        name="houseNumber"
+        type="number"
+        placeholder="Enter house number"
+        :class="{ 'input-error': errors.houseNumber }"
+      />
+      <ErrorMessage name="houseNumber" class="error-message" />
+    </div>
+    <!-- HOUSE NUMBER ADDITION INPUT -->
+    <div class="container-input" id="numberAddition">
+      <label for="numberAddition">Addition (optional)</label>
+      <Field id="numberAddition" name="numberAddition" type="text" placeholder="e.g. A" />
+    </div>
+    <!-- ZIP CODE INPUT -->
+    <div class="container-input" id="zip">
+      <label for="zip">Postal Code*</label>
+      <Field
+        id="zip"
+        name="zip"
+        type="text"
+        placeholder="e.g. 1000 AA"
+        :class="{ 'input-error': errors.zip }"
+      />
+      <ErrorMessage name="zip" class="error-message" />
+    </div>
+    <!-- CITY INPUT -->
+    <div class="container-input" id="city">
+      <label for="city">City*</label>
+      <Field
+        id="city"
+        name="city"
+        type="text"
+        placeholder="e.g. Utrecht"
+        :class="{ 'input-error': errors.city }"
+      />
+      <ErrorMessage name="city" class="error-message" />
+    </div>
+    <!-- UPLOAD IMAGE INPUT -->
+    <div class="container-input" id="image">
+      <label for="image">Upload picture (PNG or JPG)*</label>
+      <Field id="image" name="image" type="file" v-slot="{ field }">
+        <input
+          name="image"
+          type="file"
+          hidden
+          accept=".png,.jpg"
+          @change="uploadImage"
+          ref="newImage"
+          v-bind="field"
+        />
+        <button
+          v-if="!newImageLink"
+          class="file-input-button"
+          type="button"
+          :class="{ 'input-error': errors.image }"
+          @click="newImage?.click()"
+        >
+          <img :src="uploadIcon" alt="Upload" />
+        </button>
+        <div style="position: relative">
+          <img v-if="newImageLink" :src="newImageLink" class="uploaded-image" alt="Upload" />
           <img
             v-if="newImageLink"
             :src="clearWhiteIcon"
             alt="Remove"
-            @click="removeImage"
+            @click="removeImage(), setFieldValue('image', null)"
             class="remove-image"
           />
-        </label>
-        <Field
-          :as="as"
-          :id="name"
-          :name="name"
-          :rules="rules"
-          v-bind="attrs"
-          :type="type"
-          @change="uploadImage"
-        />
-      </div>
-      <ErrorMessage :name="name" />
+        </div>
+      </Field>
+      <ErrorMessage name="image" class="error-message" />
     </div>
-    <button class="post-btn" type="submit">POST</button>
+    <!-- PRICE INPUT -->
+    <div class="container-input" id="price">
+      <label for="price">Price*</label>
+      <Field
+        id="price"
+        name="price"
+        type="number"
+        placeholder="e.g. €150.000"
+        :class="{ 'input-error': errors.price }"
+      />
+      <ErrorMessage name="price" class="error-message" />
+    </div>
+    <!-- SIZE INPUT -->
+    <div class="container-input" id="size">
+      <label for="size">Size*</label>
+      <Field
+        id="size"
+        name="size"
+        type="number"
+        placeholder="e.g. 60m2"
+        :class="{ 'input-error': errors.size }"
+      />
+      <ErrorMessage name="size" class="error-message" />
+    </div>
+    <!-- GARAGE INPUT -->
+    <div class="container-input" id="hasGarage">
+      <label for="hasGarage">Garage*</label>
+      <Field
+        id="hasGarage"
+        name="hasGarage"
+        as="select"
+        :class="{ 'input-error': errors.hasGarage }"
+        required
+      >
+        <option value="" selected disabled class="default-option">Select</option>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </Field>
+      <ErrorMessage name="hasGarage" class="error-message" />
+    </div>
+    <!-- BEDROOMS INPUT -->
+    <div class="container-input" id="bedrooms">
+      <label for="bedrooms">Bedrooms*</label>
+      <Field
+        id="bedrooms"
+        name="bedrooms"
+        type="number"
+        placeholder="Enter amount"
+        :class="{ 'input-error': errors.bedrooms }"
+      />
+      <ErrorMessage name="bedrooms" class="error-message" />
+    </div>
+    <!-- BATHROOMS INPUT -->
+    <div class="container-input" id="bathrooms">
+      <label for="bathrooms">Bathrooms*</label>
+      <Field
+        id="bathrooms"
+        name="bathrooms"
+        type="number"
+        placeholder="Enter amount"
+        :class="{ 'input-error': errors.bathrooms }"
+      />
+      <ErrorMessage name="bathrooms" class="error-message" />
+    </div>
+    <!-- CONSTRUCTION YEAR INPUT -->
+    <div class="container-input" id="constructionYear">
+      <label for="constructionYear">Construction date*</label>
+      <Field
+        id="constructionYear"
+        name="constructionYear"
+        type="number"
+        placeholder="e.g. 1990"
+        :class="{ 'input-error': errors.constructionYear }"
+      />
+      <ErrorMessage name="constructionYear" class="error-message" />
+    </div>
+    <!-- DESCRIPTION INPUT -->
+    <div class="container-input" id="description">
+      <label for="description">Description*</label>
+      <Field
+        id="description"
+        name="description"
+        as="textarea"
+        type="text"
+        placeholder="Enter description"
+        :class="{ 'input-error': errors.description }"
+      />
+      <ErrorMessage name="description" class="error-message" />
+    </div>
+    <button class="post-btn" :class="!meta.valid ? 'post-button-disabled' : ''" type="submit">
+      POST
+    </button>
   </Form>
 </template>
 
@@ -178,7 +293,6 @@ const removeImage = () => {
 .post-btn {
   grid-area: button;
 }
-
 #hasGarage {
   position: relative;
 }
@@ -196,10 +310,7 @@ select:invalid,
 select option[value=''] {
   color: var(--element-tertiary-2);
 }
-select,
-select option {
-  color: black;
-}
+
 .dynamic-form span {
   color: var(--element-primary);
   font-family: 'Montserrat', sans-serif;
@@ -209,10 +320,7 @@ select option {
   margin-top: 7px;
 }
 // the inputs for the dynamic form
-.container-inputs {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+.container-input {
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   font-weight: 600;
@@ -241,6 +349,7 @@ select option {
   }
   & label {
     margin-bottom: 12px;
+    margin-top: 12px;
   }
   & .input-error {
     border: 1px solid var(--element-primary);
@@ -258,7 +367,7 @@ select option {
     color: var(--element-primary);
   }
   // the error message for the textarea red color
-  & textarea.input-error::placeholder {
+  & textarea .input-error::placeholder {
     color: var(--element-primary);
   }
   & input::placeholder {
@@ -313,11 +422,9 @@ select option {
   font-family: 'Montserrat', sans-serif;
   font-size: 18px;
   font-weight: 700;
+  margin-top: 26px;
   cursor: pointer;
   transition: 0.3s ease-in-out;
-}
-.dynamic-form input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
 .file-input-button {
@@ -338,14 +445,14 @@ select option {
   height: 150px;
   object-fit: cover;
   border-radius: 8px;
-  cursor: pointer;
 }
 .remove-image {
   position: absolute;
   width: 40px;
-  right: 0;
+  left: 116px;
   top: auto;
   transform: translate(13px, -10px);
+  cursor: pointer;
 }
 
 @media (max-width: 992px) {
@@ -368,8 +475,9 @@ select option {
     width: 100%;
     font-size: 12px;
   }
-  .container-inputs {
+  .container-input {
     font-size: 12px;
   }
 }
 </style>
+../utils/validation-schema

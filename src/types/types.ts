@@ -34,3 +34,20 @@ export interface HouseData {
   hasGarage: boolean
   madeByMe: boolean
 }
+
+export interface HouseListing {
+  id?: number | null
+  image?: string | null
+  price: number
+  bedrooms: number
+  bathrooms: number
+  size: number
+  streetName: string
+  houseNumber: number
+  numberAddition: string | null
+  city: string
+  zip: string
+  constructionYear: number
+  hasGarage: boolean
+  description: string
+}

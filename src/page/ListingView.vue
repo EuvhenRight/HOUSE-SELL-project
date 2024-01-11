@@ -1,7 +1,60 @@
 <script setup lang="ts">
 import BackToPages from '../components/Back-to-pages.vue'
 import DynamicForm from '../components/Dynamic-form.vue'
-import { formSchema } from '../utils/form-scheme'
+
+import { ref } from 'vue'
+import { useHousesStore } from '../stores/store'
+
+const housesStore = useHousesStore()
+const initialValues = ref({})
+console.log(initialValues, 'initialValues')
+const handleFormSubmit = async (values) => {
+  initialValues.value = values
+
+  const formData = new FormData()
+  const {
+    price,
+    bedrooms,
+    bathrooms,
+    size,
+    streetName,
+    houseNumber,
+    numberAddition,
+    zip,
+    city,
+    constructionYear,
+    hasGarage,
+    description,
+    image
+  } = values
+
+  formData.append('price', price)
+  formData.append('bedrooms', bedrooms)
+  formData.append('bathrooms', bathrooms)
+  formData.append('size', size)
+  formData.append('streetName', streetName)
+  formData.append('houseNumber', houseNumber)
+  formData.append('numberAddition', numberAddition)
+  formData.append('zip', zip)
+  formData.append('city', city)
+  formData.append('constructionYear', constructionYear)
+  formData.append('hasGarage', hasGarage)
+  formData.append('description', description)
+
+  const data = await housesStore.postCreateHouse(formData)
+  console.log(data, 'data')
+  console.log(housesStore.newHouse, 'newHouse')
+  console.log(formData, 'formData')
+
+  const formUploadImage = new FormData()
+  formUploadImage.append('image', image, image.name)
+  setTimeout(async () => {
+    if (housesStore.newHouse?.id) {
+      await housesStore.postUploadImage(housesStore.newHouse.id, formUploadImage)
+    }
+  }, 2000)
+  console.log(housesStore.newHouse, 'newHouse')
+}
 </script>
 <template>
   <div class="background-listing">
@@ -10,7 +63,7 @@ import { formSchema } from '../utils/form-scheme'
         <BackToPages />
         <h2 class="title-listing">Create new listing</h2>
       </div>
-      <DynamicForm :schema="formSchema" />
+      <DynamicForm @on-submit="handleFormSubmit" :valuesForm="initialValues" />
     </div>
   </div>
 </template>
@@ -48,3 +101,4 @@ import { formSchema } from '../utils/form-scheme'
   }
 }
 </style>
+../utils/validation-schema

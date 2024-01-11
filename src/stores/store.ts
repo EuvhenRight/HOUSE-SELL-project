@@ -1,5 +1,6 @@
-import { HouseData } from '@/types/types'
+import type { HouseData } from '@/types/types'
 import { defineStore } from 'pinia'
+import type { HouseListing } from './../types/types'
 import { apiService } from './../utils/api-service'
 
 export const useHousesStore = defineStore('HouseStore', {
@@ -9,7 +10,8 @@ export const useHousesStore = defineStore('HouseStore', {
       houseData: {} as HouseData,
       sortedBy: null as boolean | null, // triggered by price or size
       searchData: [] as HouseData[],
-      searchValue: null as string | null // Search value input field
+      searchValue: null as string | null, // Search value input field
+      newHouse: {} as HouseListing | null
     }
   },
   getters: {
@@ -53,6 +55,33 @@ export const useHousesStore = defineStore('HouseStore', {
         this.houseData = response.data || null
       } catch (error) {
         console.error('Error in API request:', error)
+      }
+    },
+    async postCreateHouse(params: FormData) {
+      try {
+        const response = await apiService<HouseListing>(
+          import.meta.env.VITE_API_MAIN_URL,
+          'POST',
+          params
+        )
+        this.newHouse = response.data
+        console.log(this.newHouse, 'newHouse')
+        console.log(response.data, 'response.data') // response.data
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async postUploadImage(id: number, params: FormData) {
+      try {
+        const response = await apiService<HouseListing>(
+          `${import.meta.env.VITE_API_MAIN_URL}/${id}/upload`,
+          'POST',
+          params
+        )
+        this.newHouse = response.data
+        console.log(this.newHouse)
+      } catch (error) {
+        console.error(error)
       }
     },
     sortHousesByPrice(): void {

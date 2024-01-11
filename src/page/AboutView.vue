@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Logo from '../assets/images/img_logo_dtt@3x.png'
+import { ref } from 'vue'
 </script>
 
 <template>

@@ -18,9 +18,7 @@ import { useMonitorSize } from '../utils/monitor-sizes'
 import { RouterLink, useRoute } from 'vue-router'
 import { HouseData } from '../types/types'
 import { useHousesStore } from '../stores/store'
-import { onMounted, reactive, ref } from 'vue'
-
-const house = ref<HouseData | null>(null)
+import { onMounted, ref } from 'vue'
 
 // size monitor view
 const { base, xs, sm } = useMonitorSize()
@@ -29,7 +27,7 @@ const route = useRoute()
 const rawId = route.params.id as string
 // Assuming you have 'id' available
 const id = parseInt(rawId, 10)
-const data = ref<HouseData>()
+const data = ref<HouseData>({})
 
 onMounted(async () => {
   await housesStore.getHouseById(id)
@@ -50,7 +48,7 @@ function convertPrice(price) {
         <div class="house-details-content">
           <div class="wrapper-house-address">
             <div class="house-address">{{ house?.location.street }}</div>
-            <div class="container-btn">
+            <div v-if="house?.madeByMe" class="container-btn">
               <button class="btn-tabs">
                 <img :src="!base && !xs && !sm ? editIcon : editWhiteIcon" alt="Edit Icon" />
               </button>
