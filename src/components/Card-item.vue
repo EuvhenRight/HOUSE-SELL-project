@@ -41,10 +41,12 @@ function convertPrice(price) {
           </div>
         </div>
         <div v-if="props.house?.madeByMe" class="container-btn">
-          <button class="btn-tabs">
-            <img :src="editIcon" alt="Edit Icon" />
-          </button>
-          <RouterLink to="/delete_house">
+          <RouterLink :to="{ name: 'editListing', params: { id: props.house?.id } }">
+            <button class="btn-tabs">
+              <img :src="editIcon" alt="Edit Icon" />
+            </button>
+          </RouterLink>
+          <RouterLink :to="{ name: 'deleteListing', params: { id: props.house?.id } }">
             <button class="btn-tabs">
               <img :src="deleteIcon" alt="Delete Icon" />
             </button>

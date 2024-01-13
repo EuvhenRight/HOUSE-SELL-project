@@ -7,6 +7,8 @@ import { useMonitorSize } from '../utils/monitor-sizes'
 const { base, xs, sm } = useMonitorSize()
 const router = useRouter()
 
+const editPageRoute = router.currentRoute.value.name === 'editListing'
+
 const currentArrow = () => {
   return router.currentRoute.value.name === 'HouseDetails' ? ArrowWithWhite : ArrowBack
 }
@@ -15,10 +17,24 @@ const currentArrow = () => {
 <template>
   <div :class="{ 'back-to-pages': !base && !xs && !sm, 'back-to-pages-mobile': base || xs || sm }">
     <button>
-      <img v-if="base || xs || sm" :src="currentArrow()" alt="ArrowBack" @click="$router.go(-1)" />
-      <img v-else :src="ArrowBack" alt="ArrowBack" @click="$router.go(-1)" />
+      <img
+        v-if="base || xs || sm"
+        :src="currentArrow()"
+        alt="ArrowBack"
+        @click="$router.push({ name: 'Home' })"
+      />
+      <img
+        v-else
+        :src="ArrowBack"
+        alt="ArrowBack"
+        @click="
+          editPageRoute ? $router.push({ name: 'HouseDetails' }) : $router.push({ name: 'Home' })
+        "
+      />
     </button>
-    <span v-if="!base && !xs && !sm">Back to overview</span>
+    <span v-if="!base && !xs && !sm">{{
+      editPageRoute ? 'Back to details page' : 'Back to overview'
+    }}</span>
   </div>
 </template>
 

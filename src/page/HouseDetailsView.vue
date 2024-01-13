@@ -10,13 +10,11 @@ import garageIcon from '../assets/icons/ic_garage@3x.png'
 import locationIcon from '../assets/icons/ic_location@3x.png'
 import priceIcon from '../assets/icons/ic_price@3x.png'
 import sizeIcon from '../assets/icons/ic_size@3x.png'
-import HouseImage from '../assets/images/img_placeholder_house@3x.png'
 import BackToPages from '../components/Back-to-pages.vue'
 import CardItemRecommended from '../components/Card-item-recommended.vue'
 
 import { useMonitorSize } from '../utils/monitor-sizes'
 import { RouterLink, useRoute } from 'vue-router'
-import { HouseData } from '../types/types'
 import { useHousesStore } from '../stores/store'
 import { onMounted, ref } from 'vue'
 
@@ -27,7 +25,7 @@ const route = useRoute()
 const rawId = route.params.id as string
 // Assuming you have 'id' available
 const id = parseInt(rawId, 10)
-const data = ref<HouseData>({})
+const data = ref()
 
 onMounted(async () => {
   await housesStore.getHouseById(id)
@@ -49,10 +47,12 @@ function convertPrice(price) {
           <div class="wrapper-house-address">
             <div class="house-address">{{ house?.location.street }}</div>
             <div v-if="house?.madeByMe" class="container-btn">
-              <button class="btn-tabs">
-                <img :src="!base && !xs && !sm ? editIcon : editWhiteIcon" alt="Edit Icon" />
-              </button>
-              <RouterLink to="/delete_house">
+              <RouterLink :to="{ name: 'editListing', params: { id: house?.id } }">
+                <button class="btn-tabs">
+                  <img :src="!base && !xs && !sm ? editIcon : editWhiteIcon" alt="Edit Icon" />
+                </button>
+              </RouterLink>
+              <RouterLink :to="{ name: 'deleteListing', params: { id: house?.id } }">
                 <button class="btn-tabs">
                   <img
                     :src="!base && !xs && !sm ? deleteIcon : deleteWhiteIcon"
@@ -64,7 +64,7 @@ function convertPrice(price) {
           </div>
           <div class="house-details-location">
             <span><img :src="locationIcon" alt="Location Icon" /></span>
-            {{ house?.location.street }} {{ house?.location.zip }}
+            {{ house?.location.city }} {{ house?.location.zip }}
           </div>
           <div class="house-details-info">
             <div>
@@ -90,7 +90,7 @@ function convertPrice(price) {
               >
               <span class="house-details-icons"
                 ><img :src="garageIcon" alt="Garage Icon" />
-                <p class="details-info">{{ house?.hasGarage }}</p></span
+                <p class="details-info">{{ house?.hasGarage === true ? 'Yes' : 'No' }}</p></span
               >
             </div>
           </div>

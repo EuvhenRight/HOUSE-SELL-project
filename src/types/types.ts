@@ -37,7 +37,7 @@ export interface HouseData {
 
 export interface HouseListing {
   id?: number | null
-  image?: string | null
+  image: string | null
   price: number
   bedrooms: number
   bathrooms: number

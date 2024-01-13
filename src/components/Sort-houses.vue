@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useHousesStore } from '../stores/store'
+import iconArrow from '../assets/icons/icon-arrow.svg'
 
 const houseStore = useHousesStore()
 </script>
@@ -13,6 +14,13 @@ const houseStore = useHousesStore()
         :class="{ 'active-list': houseStore.sortedBy }"
       >
         Price
+        <img
+          v-if="houseStore.ascendingOrder"
+          class="icon-arrow"
+          :src="iconArrow"
+          alt="Arrow Icon"
+        />
+        <img v-else class="icon-arrow rotate" :src="iconArrow" alt="Arrow Icon" />
       </li>
       <li
         @click="houseStore.sortHousesBySize"
@@ -20,6 +28,13 @@ const houseStore = useHousesStore()
         :class="{ 'active-list': !houseStore.sortedBy }"
       >
         Size
+        <img
+          v-if="houseStore.ascendingOrder"
+          class="icon-arrow"
+          :src="iconArrow"
+          alt="Arrow Icon"
+        />
+        <img v-else class="icon-arrow rotate" :src="iconArrow" alt="Arrow Icon" />
       </li>
     </ul>
   </div>
@@ -48,14 +63,27 @@ const houseStore = useHousesStore()
 
 .price-list {
   border-radius: 5px 0 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .size-list {
   border-radius: 0 5px 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 li.active-list {
   background-color: var(--element-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rotate {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
 }
 
 @media (max-width: 806px) {

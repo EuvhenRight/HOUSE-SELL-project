@@ -1,15 +1,32 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useHousesStore } from '../stores/store'
+import { useRoute, useRouter } from 'vue-router'
+
+const route = useRoute()
+const router = useRouter()
+
+const rewId = route.params.id as string
+const id = parseInt(rewId, 10)
+
+const housesStore = useHousesStore()
+const deleteHouse = async (id: number) => {
+  await housesStore.deleteHouseItem(id)
+  router.push({ path: '/' })
+}
+</script>
 
 <template>
   <div class="container-delete-pop-up">
     <div class="pop-up-body">
-      <form class="popup-form" noValidate>
+      <div class="popup-form" noValidate>
         <h2>Delete listing</h2>
         <p>Are you sure you want to delete this listing?</p>
         <p>This action cannot be undone.</p>
-        <button class="delete-submit-button" type="submit">YES, DELETE</button>
+        <button @click="deleteHouse(id)" class="delete-submit-button" type="submit">
+          YES, DELETE
+        </button>
         <button class="delete-go-back-button" type="button" @click="$router.go(-1)">GO BACK</button>
-      </form>
+      </div>
     </div>
   </div>
 </template>

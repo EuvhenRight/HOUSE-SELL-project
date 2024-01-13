@@ -2,13 +2,16 @@
 import uploadIcon from '../assets/icons/ic_upload@3x.png'
 import clearWhiteIcon from '../assets/icons/ic_clear_white@3x.png'
 
-import { ref, defineProps, defineEmits } from 'vue'
+import { ref, computed } from 'vue'
 import { ErrorMessage, Field, Form } from 'vee-validate'
 import { validationFieldsSchema } from '../utils/validation-schema'
 import { HouseListing } from '../types/types'
+import { useRouter } from 'vue-router'
 
-defineProps<{ valuesForm: HouseListing }>()
+const props = defineProps<{ currentValues: HouseListing; currentImageValue: string | null }>()
 const emit = defineEmits(['on-submit'])
+
+const currentValuesCopy = computed(() => props.currentValues)
 
 const handleSubmit = (values) => {
   emit('on-submit', values)
@@ -17,8 +20,8 @@ const handleSubmit = (values) => {
 const imageData = ref<string | null>(null)
 const newImage = ref<HTMLInputElement | null>(null)
 const newImageLink = ref<string | null>(null)
-
-// const fileInputClick = ref<HTMLInputElement | null>(null)
+const router = useRouter()
+const currentRoute = ref(router.currentRoute.value.name)
 
 const uploadImage = (e) => {
   const file = e.target.files[0]
@@ -27,11 +30,11 @@ const uploadImage = (e) => {
     newImageLink.value = URL.createObjectURL(file)
   }
 }
-
 const removeImage = () => {
   imageData.value = null
   newImage.value = null
   newImageLink.value = null
+  currentValuesCopy.value.image = null
 }
 </script>
 
@@ -39,7 +42,7 @@ const removeImage = () => {
   <Form
     @submit="handleSubmit"
     :validation-schema="validationFieldsSchema"
-    :initial-values="valuesForm"
+    :initial-values="currentValues"
     class="dynamic-form"
     v-slot="{ meta, setFieldValue, errors }"
   >
@@ -52,6 +55,7 @@ const removeImage = () => {
         name="streetName"
         placeholder="Enter the street name"
         :class="{ 'input-error': errors.streetName }"
+        v-model="currentValuesCopy.streetName"
       />
       <ErrorMessage name="streetName" class="error-message" />
     </div>
@@ -64,13 +68,20 @@ const removeImage = () => {
         type="number"
         placeholder="Enter house number"
         :class="{ 'input-error': errors.houseNumber }"
+        v-model="currentValuesCopy.houseNumber"
       />
       <ErrorMessage name="houseNumber" class="error-message" />
     </div>
     <!-- HOUSE NUMBER ADDITION INPUT -->
     <div class="container-input" id="numberAddition">
       <label for="numberAddition">Addition (optional)</label>
-      <Field id="numberAddition" name="numberAddition" type="text" placeholder="e.g. A" />
+      <Field
+        id="numberAddition"
+        name="numberAddition"
+        type="text"
+        placeholder="e.g. A"
+        v-model="currentValuesCopy.numberAddition"
+      />
     </div>
     <!-- ZIP CODE INPUT -->
     <div class="container-input" id="zip">
@@ -81,6 +92,7 @@ const removeImage = () => {
         type="text"
         placeholder="e.g. 1000 AA"
         :class="{ 'input-error': errors.zip }"
+        v-model="currentValuesCopy.zip"
       />
       <ErrorMessage name="zip" class="error-message" />
     </div>
@@ -93,6 +105,7 @@ const removeImage = () => {
         type="text"
         placeholder="e.g. Utrecht"
         :class="{ 'input-error': errors.city }"
+        v-model="currentValuesCopy.city"
       />
       <ErrorMessage name="city" class="error-message" />
     </div>
@@ -110,7 +123,7 @@ const removeImage = () => {
           v-bind="field"
         />
         <button
-          v-if="!newImageLink"
+          v-if="currentValues.image && !newImageLink ? !currentValues.image : !newImageLink"
           class="file-input-button"
           type="button"
           :class="{ 'input-error': errors.image }"
@@ -119,9 +132,14 @@ const removeImage = () => {
           <img :src="uploadIcon" alt="Upload" />
         </button>
         <div style="position: relative">
-          <img v-if="newImageLink" :src="newImageLink" class="uploaded-image" alt="Upload" />
           <img
-            v-if="newImageLink"
+            v-if="currentValues.image && !newImageLink ? currentValues.image : newImageLink"
+            :src="(currentValues.image ?? '') || (newImageLink ?? '')"
+            class="uploaded-image"
+            alt="Upload"
+          />
+          <img
+            v-if="newImageLink || currentValues.image"
             :src="clearWhiteIcon"
             alt="Remove"
             @click="removeImage(), setFieldValue('image', null)"
@@ -140,6 +158,7 @@ const removeImage = () => {
         type="number"
         placeholder="e.g. €150.000"
         :class="{ 'input-error': errors.price }"
+        v-model="currentValuesCopy.price"
       />
       <ErrorMessage name="price" class="error-message" />
     </div>
@@ -152,6 +171,7 @@ const removeImage = () => {
         type="number"
         placeholder="e.g. 60m2"
         :class="{ 'input-error': errors.size }"
+        v-model="currentValuesCopy.size"
       />
       <ErrorMessage name="size" class="error-message" />
     </div>
@@ -163,6 +183,7 @@ const removeImage = () => {
         name="hasGarage"
         as="select"
         :class="{ 'input-error': errors.hasGarage }"
+        v-model="currentValuesCopy.hasGarage"
         required
       >
         <option value="" selected disabled class="default-option">Select</option>
@@ -180,6 +201,7 @@ const removeImage = () => {
         type="number"
         placeholder="Enter amount"
         :class="{ 'input-error': errors.bedrooms }"
+        v-model="currentValuesCopy.bedrooms"
       />
       <ErrorMessage name="bedrooms" class="error-message" />
     </div>
@@ -192,6 +214,7 @@ const removeImage = () => {
         type="number"
         placeholder="Enter amount"
         :class="{ 'input-error': errors.bathrooms }"
+        v-model="currentValuesCopy.bathrooms"
       />
       <ErrorMessage name="bathrooms" class="error-message" />
     </div>
@@ -204,6 +227,7 @@ const removeImage = () => {
         type="number"
         placeholder="e.g. 1990"
         :class="{ 'input-error': errors.constructionYear }"
+        v-model="currentValuesCopy.constructionYear"
       />
       <ErrorMessage name="constructionYear" class="error-message" />
     </div>
@@ -217,11 +241,17 @@ const removeImage = () => {
         type="text"
         placeholder="Enter description"
         :class="{ 'input-error': errors.description }"
+        v-model="currentValuesCopy.description"
       />
       <ErrorMessage name="description" class="error-message" />
     </div>
-    <button class="post-btn" :class="!meta.valid ? 'post-button-disabled' : ''" type="submit">
-      POST
+    <button
+      class="post-btn"
+      :class="{ 'post-button-disabled': !meta.valid }"
+      :disabled="!meta.valid"
+      type="submit"
+    >
+      {{ currentRoute === 'editListing' ? 'SAFE' : 'POST' }}
     </button>
   </Form>
 </template>
@@ -234,9 +264,8 @@ const removeImage = () => {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 2fr 1fr;
-  grid-auto-columns: 1fr;
   align-items: start;
-  gap: 0px 20px;
+  gap: 10px 20px;
   grid-auto-flow: row;
   grid-template-areas:
     'streetName streetName'
@@ -310,7 +339,6 @@ select:invalid,
 select option[value=''] {
   color: var(--element-tertiary-2);
 }
-
 .dynamic-form span {
   color: var(--element-primary);
   font-family: 'Montserrat', sans-serif;
@@ -422,9 +450,12 @@ select option[value=''] {
   font-family: 'Montserrat', sans-serif;
   font-size: 18px;
   font-weight: 700;
-  margin-top: 26px;
   cursor: pointer;
   transition: 0.3s ease-in-out;
+}
+.post-button-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .file-input-button {
@@ -480,4 +511,3 @@ select option[value=''] {
   }
 }
 </style>
-../utils/validation-schema

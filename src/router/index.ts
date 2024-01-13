@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import DeleteListing from '../components/Delete-pop-up.vue'
 import About from '../page/AboutView.vue'
+import DeleteListing from '../page/DeleteListingView.vue'
+import EditListing from '../page/EditListingView.vue'
 import Home from '../page/HomeView.vue'
 import HouseDetails from '../page/HouseDetailsView.vue'
-import CreateNewListing from '../page/ListingView.vue'
+import CreateNewListing from '../page/NewListingView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -41,7 +42,15 @@ const router = createRouter({
       }
     },
     {
-      path: '/delete_house',
+      path: '/edit_listing/:id',
+      name: 'editListing',
+      component: EditListing,
+      meta: {
+        title: 'Create House'
+      }
+    },
+    {
+      path: '/delete_house/:id',
       name: 'deleteListing',
       component: DeleteListing,
       meta: {

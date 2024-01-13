@@ -11,7 +11,9 @@ export const useHousesStore = defineStore('HouseStore', {
       sortedBy: null as boolean | null, // triggered by price or size
       searchData: [] as HouseData[],
       searchValue: null as string | null, // Search value input field
-      newHouse: {} as HouseListing | null
+      newHouse: {} as HouseListing | null,
+      editHouse: {} as HouseListing | null,
+      ascendingOrder: true as boolean
     }
   },
   getters: {
@@ -65,8 +67,6 @@ export const useHousesStore = defineStore('HouseStore', {
           params
         )
         this.newHouse = response.data
-        console.log(this.newHouse, 'newHouse')
-        console.log(response.data, 'response.data') // response.data
       } catch (error) {
         console.error(error)
       }
@@ -79,22 +79,65 @@ export const useHousesStore = defineStore('HouseStore', {
           params
         )
         this.newHouse = response.data
-        console.log(this.newHouse)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async postEditHouse(id: number, params: FormData) {
+      try {
+        const response = await apiService<HouseListing>(
+          `${import.meta.env.VITE_API_MAIN_URL}/${id}`,
+          'POST',
+          params
+        )
+        this.editHouse = response.data
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async postEditUploadImage(id: number, params: FormData) {
+      try {
+        const response = await apiService<HouseListing>(
+          `${import.meta.env.VITE_API_MAIN_URL}/${id}/upload`,
+          'POST',
+          params
+        )
+        this.editHouse = response.data
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async deleteHouseItem(id: number) {
+      try {
+        await apiService<HouseData>(`${import.meta.env.VITE_API_MAIN_URL}/${id}`, 'DELETE')
       } catch (error) {
         console.error(error)
       }
     },
     sortHousesByPrice(): void {
-      // Sort by price
-      this.housesData.sort((a, b) => a.price - b.price)
+      // Toggle sorting order
+      this.ascendingOrder = !this.ascendingOrder
+      // Set rotatingIcon to true when sorting is active
 
+      // Sort by price
+      if (this.ascendingOrder) {
+        this.housesData.sort((a, b) => a.price - b.price)
+      } else {
+        this.housesData.sort((a, b) => b.price - a.price)
+      }
       // Trigger a reactivity update
       this.housesData = [...this.housesData]
       this.sortedBy = true
     },
     sortHousesBySize(): void {
-      // Sort by size
-      this.housesData.sort((a, b) => a.size - b.size)
+      // Toggle sorting order
+      this.ascendingOrder = !this.ascendingOrder
+
+      if (this.ascendingOrder) {
+        this.housesData.sort((a, b) => a.size - b.size)
+      } else {
+        this.housesData.sort((a, b) => b.size - a.size)
+      }
 
       // Trigger a reactivity update
       this.housesData = [...this.housesData]
