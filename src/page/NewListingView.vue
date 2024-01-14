@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BackToPages from '../components/Back-to-pages.vue'
-import DynamicForm from '../components/Dynamic-form-create.vue'
+import DynamicForm from '../components/Dynamic-form.vue'
 
 import { ref } from 'vue'
 import { useHousesStore } from '../stores/store'
@@ -8,7 +8,7 @@ import { useRouter } from 'vue-router'
 import type { HouseListing } from '../types/types'
 
 const housesStore = useHousesStore()
-const initialValues = ref({})
+const currentValues = ref({})
 const newCreatedHouse = ref<HouseListing>()
 const router = useRouter()
 // Promises and timeouts
@@ -76,7 +76,7 @@ const handleSubmit = (values) => {
         <BackToPages />
         <h2 class="title-listing">Create new listing</h2>
       </div>
-      <DynamicForm @on-submit="handleSubmit" :valuesForm="initialValues" />
+      <DynamicForm @on-submit="handleSubmit" :currentValues="currentValues" />
     </div>
   </div>
 </template>

@@ -1,19 +1,18 @@
 <script setup lang="ts">
+import { useHousesStore } from '../stores/store'
+import { HouseData } from '../types/types'
+import { computed, onMounted, ref, watch } from 'vue'
+import { RouterLink } from 'vue-router'
+
 import emptyHousesImg from '../assets/images/img_empty_houses@3x.png'
 import CardItem from '../components/Card-item.vue'
 import CreateNewBtn from '../components/Create-new-btn.vue'
 import SearchBar from '../components/Search-bar.vue'
 import SortHouses from '../components/Sort-houses.vue'
 
-import { useHousesStore } from '../stores/store'
-import { HouseData } from '../types/types'
-import { computed, onMounted, ref, watch } from 'vue'
-import { RouterLink } from 'vue-router'
-
 const housesStore = useHousesStore()
 // REACTIVE DATA
 const data = ref<HouseData[]>([])
-
 // WATCH FOR CHANGES
 watch(
   () => housesStore.housesData,
@@ -107,7 +106,9 @@ h2 {
 .container-search-view a {
   text-decoration: none;
 }
-
+.list-houses {
+  margin-bottom: 100px;
+}
 .list-houses li {
   list-style: none;
 }

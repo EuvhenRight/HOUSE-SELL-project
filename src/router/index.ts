@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import About from '../page/AboutView.vue'
-import DeleteListing from '../page/DeleteListingView.vue'
 import EditListing from '../page/EditListingView.vue'
 import Home from '../page/HomeView.vue'
 import HouseDetails from '../page/HouseDetailsView.vue'
@@ -47,14 +46,6 @@ const router = createRouter({
       component: EditListing,
       meta: {
         title: 'Create House'
-      }
-    },
-    {
-      path: '/delete_house/:id',
-      name: 'deleteListing',
-      component: DeleteListing,
-      meta: {
-        title: 'Delete House'
       }
     }
   ]

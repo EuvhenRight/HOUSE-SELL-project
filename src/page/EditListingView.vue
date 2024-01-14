@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BackToPages from '../components/Back-to-pages.vue'
-import DynamicForm from '../components/Dynamic-form-edit.vue'
+import DynamicForm from '../components/Dynamic-form.vue'
 
 import { ref, onMounted } from 'vue'
 import { useHousesStore } from '../stores/store'
@@ -9,7 +9,6 @@ import type { HouseListing } from '../types/types'
 
 const housesStore = useHousesStore()
 const currentValues = ref({})
-const currentImageValue = ref<string | null>(null)
 const newEditedHouse = ref<HouseListing>()
 const router = useRouter()
 const route = useRoute()
@@ -21,10 +20,6 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 onMounted(async () => {
   // Fetch the house data by ID and set it as initial values
   await housesStore.getHouseById(id)
-
-  if (housesStore.houseData[0].image) {
-    currentImageValue.value = housesStore.houseData[0].image
-  }
 
   currentValues.value = {
     streetName: housesStore.houseData[0].location.street,
@@ -107,11 +102,7 @@ const handleSubmit = (values) => {
         <BackToPages />
         <h2 class="title-listing">Edit listing</h2>
       </div>
-      <DynamicForm
-        @on-submit="handleSubmit"
-        :currentValues="currentValues"
-        :currentImageValue="currentImageValue"
-      />
+      <DynamicForm @on-submit="handleSubmit" :currentValues="currentValues" />
     </div>
   </div>
 </template>

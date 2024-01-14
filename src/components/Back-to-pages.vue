@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import ArrowBack from '../assets/icons/ic_back_grey@3x.png'
-import ArrowWithWhite from '../assets/icons/ic_back_white@3x.png'
 import { useRouter } from 'vue-router'
 import { useMonitorSize } from '../utils/monitor-sizes'
+
+import ArrowBack from '../assets/icons/ic_back_grey@3x.png'
+import ArrowWithWhite from '../assets/icons/ic_back_white@3x.png'
 
 const { base, xs, sm } = useMonitorSize()
 const router = useRouter()
 
 const editPageRoute = router.currentRoute.value.name === 'editListing'
-
+// setup arrow image
 const currentArrow = () => {
   return router.currentRoute.value.name === 'HouseDetails' ? ArrowWithWhite : ArrowBack
 }
@@ -67,8 +68,8 @@ const currentArrow = () => {
 .back-to-pages-mobile {
   padding: 0;
   position: absolute;
-  top: 46px;
-  left: 22px;
+  top: 40px;
+  left: 20px;
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   font-weight: 600;

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
 import bathIcon from '../assets/icons/ic_bath@3x.png'
 import bedIcon from '../assets/icons/ic_bed@3x.png'
 import sizeIcon from '../assets/icons/ic_size@3x.png'
@@ -8,32 +7,30 @@ import imageIcon from '../assets/images/img_placeholder_house@3x.png'
 
 <template>
   <div class="container-card-item">
-    <RouterLink to="`/house/${props.house?.id}`">
-      <div class="card-item">
-        <div class="info-block">
-          <img class="card-item-img" :src="imageIcon" alt="imageIcon" />
-          <div class="container-card-info">
-            <div class="house-location">joan Melchior St. 46H</div>
-            <div class="price-info">$500</div>
-            <div class="zip-code-info">1051TS</div>
-            <div class="room-info">
-              <span class="icons"
-                ><img :src="bedIcon" alt="Bed Icon" />
-                <p>1</p></span
-              >
-              <span class="icons"
-                ><img :src="bathIcon" alt="Bath Icon" />
-                <p>1</p></span
-              >
-              <span class="icons"
-                ><img :src="sizeIcon" alt="Size Icon" />
-                <p>120 m2</p></span
-              >
-            </div>
+    <div class="card-item">
+      <div class="info-block">
+        <img class="card-item-img" :src="imageIcon" alt="imageIcon" />
+        <div class="container-card-info">
+          <div class="house-location">joan Melchior St. 46H</div>
+          <div class="price-info">$500</div>
+          <div class="zip-code-info">1051TS</div>
+          <div class="room-info">
+            <span class="icons"
+              ><img :src="bedIcon" alt="Bed Icon" />
+              <p>1</p></span
+            >
+            <span class="icons"
+              ><img :src="bathIcon" alt="Bath Icon" />
+              <p>1</p></span
+            >
+            <span class="icons"
+              ><img :src="sizeIcon" alt="Size Icon" />
+              <p>120 m2</p></span
+            >
           </div>
         </div>
       </div>
-    </RouterLink>
+    </div>
   </div>
 </template>
 

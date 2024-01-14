@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import { HouseData } from '../types/types'
 import { RouterLink } from 'vue-router'
+
 import bathIcon from '../assets/icons/ic_bath@3x.png'
 import bedIcon from '../assets/icons/ic_bed@3x.png'
-import deleteIcon from '../assets/icons/ic_delete@3x.png'
-import editIcon from '../assets/icons/ic_edit@3x.png'
 import sizeIcon from '../assets/icons/ic_size@3x.png'
-import { HouseData } from '../types/types'
+import EditDeleteButtons from './Edit-delete-buttons.vue'
 
 const props = defineProps<{ house: HouseData }>()
 
@@ -16,8 +16,8 @@ function convertPrice(price) {
 
 <template>
   <div class="container-card-item">
-    <RouterLink :to="`/house-details/${props.house?.id}`">
-      <div class="card-item">
+    <div class="card-item">
+      <RouterLink :to="`/house-details/${props.house?.id}`">
         <div class="info-block">
           <img class="card-item-img" :src="props.house?.image" alt="imageIcon" />
           <div class="container-card-info">
@@ -40,30 +40,17 @@ function convertPrice(price) {
             </div>
           </div>
         </div>
-        <div v-if="props.house?.madeByMe" class="container-btn">
-          <RouterLink :to="{ name: 'editListing', params: { id: props.house?.id } }">
-            <button class="btn-tabs">
-              <img :src="editIcon" alt="Edit Icon" />
-            </button>
-          </RouterLink>
-          <RouterLink :to="{ name: 'deleteListing', params: { id: props.house?.id } }">
-            <button class="btn-tabs">
-              <img :src="deleteIcon" alt="Delete Icon" />
-            </button>
-          </RouterLink>
-        </div>
+      </RouterLink>
+      <div v-if="props.house?.madeByMe">
+        <EditDeleteButtons :house="props.house" />
       </div>
-    </RouterLink>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .container-card-item {
   position: relative;
-  & :hover {
-    transition: 0.2s ease-in-out;
-    transform: scale(1.02);
-  }
 }
 .container-card-item a {
   text-decoration: none;

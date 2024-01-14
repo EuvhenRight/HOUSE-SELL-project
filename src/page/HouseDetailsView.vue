@@ -2,24 +2,19 @@
 import bathIcon from '../assets/icons/ic_bath@3x.png'
 import bedIcon from '../assets/icons/ic_bed@3x.png'
 import constructionIcon from '../assets/icons/ic_construction_date@3x.png'
-import deleteIcon from '../assets/icons/ic_delete@3x.png'
-import deleteWhiteIcon from '../assets/icons/ic_delete_white@3x.png'
-import editIcon from '../assets/icons/ic_edit@3x.png'
-import editWhiteIcon from '../assets/icons/ic_edit_white@3x.png'
 import garageIcon from '../assets/icons/ic_garage@3x.png'
 import locationIcon from '../assets/icons/ic_location@3x.png'
 import priceIcon from '../assets/icons/ic_price@3x.png'
 import sizeIcon from '../assets/icons/ic_size@3x.png'
 import BackToPages from '../components/Back-to-pages.vue'
 import CardItemRecommended from '../components/Card-item-recommended.vue'
+import EditDeleteButtons from '../components/Edit-delete-buttons.vue'
 
-import { useMonitorSize } from '../utils/monitor-sizes'
-import { RouterLink, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { useHousesStore } from '../stores/store'
 import { onMounted, ref } from 'vue'
 
 // size monitor view
-const { base, xs, sm } = useMonitorSize()
 const housesStore = useHousesStore()
 const route = useRoute()
 const rawId = route.params.id as string
@@ -46,20 +41,8 @@ function convertPrice(price) {
         <div class="house-details-content">
           <div class="wrapper-house-address">
             <div class="house-address">{{ house?.location.street }}</div>
-            <div v-if="house?.madeByMe" class="container-btn">
-              <RouterLink :to="{ name: 'editListing', params: { id: house?.id } }">
-                <button class="btn-tabs">
-                  <img :src="!base && !xs && !sm ? editIcon : editWhiteIcon" alt="Edit Icon" />
-                </button>
-              </RouterLink>
-              <RouterLink :to="{ name: 'deleteListing', params: { id: house?.id } }">
-                <button class="btn-tabs">
-                  <img
-                    :src="!base && !xs && !sm ? deleteIcon : deleteWhiteIcon"
-                    alt="Delete Icon"
-                  />
-                </button>
-              </RouterLink>
+            <div v-if="house?.madeByMe">
+              <EditDeleteButtons :house="house" />
             </div>
           </div>
           <div class="house-details-location">
@@ -101,6 +84,10 @@ function convertPrice(price) {
     <div class="house-recommended-container">
       <h2>Recommended for you</h2>
       <div class="recommended-cards">
+        <CardItemRecommended />
+        <CardItemRecommended />
+        <CardItemRecommended />
+        <CardItemRecommended />
         <CardItemRecommended />
       </div>
     </div>
@@ -161,49 +148,22 @@ function convertPrice(price) {
     align-items: center;
   }
 }
-
 .house-details-info img {
   width: 20px;
 }
-
 .house-details-icons {
   margin-right: 10px;
   display: flex;
 }
-
 .house-details-icons img {
   margin-right: 10px;
 }
-
 .details-info {
   margin-right: 26px;
 }
-
 .house-description {
   padding: 20px 0;
 }
-.container-btn {
-  display: flex;
-  & button {
-    border: none;
-    background-color: transparent;
-    margin-left: 20px;
-    z-index: 99;
-  }
-}
-
-.btn-tabs img {
-  width: 20px;
-  opacity: 0.7;
-  cursor: pointer;
-}
-
-.btn-tabs img:hover {
-  opacity: 1;
-  transition: 0.3s ease-in-out;
-  transform: scale(1.1);
-}
-
 .house-recommended-container h2 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
@@ -214,6 +174,7 @@ function convertPrice(price) {
 .house-recommended-container {
   width: 100%;
   padding: 100px 0 0 100px;
+  margin-bottom: 50px;
 }
 
 @media (min-width: 992px) and (max-width: 1319px) {
@@ -228,6 +189,7 @@ function convertPrice(price) {
 
   .house-recommended-container {
     padding: 100px 0 0 50px;
+    margin-bottom: 50px;
   }
 }
 
@@ -245,7 +207,6 @@ function convertPrice(price) {
     width: 100%;
     height: 100%;
   }
-
   .house-details-content {
     border-top-left-radius: 42px;
     border-top-right-radius: 42px;
@@ -253,18 +214,10 @@ function convertPrice(price) {
   }
   .house-recommended-container {
     padding: 36px 30px 0 30px;
-  }
-  .container-btn {
-    position: absolute;
-    top: 50px;
-    right: 36px;
+    margin-bottom: 75px;
   }
   .house-details-content {
     position: static;
-  }
-
-  .btn-tabs img {
-    opacity: 1;
   }
 }
 </style>

@@ -1,28 +1,26 @@
 <script setup lang="ts">
-import uploadIcon from '../assets/icons/ic_upload@3x.png'
-import clearWhiteIcon from '../assets/icons/ic_clear_white@3x.png'
-
 import { ref, computed } from 'vue'
 import { ErrorMessage, Field, Form } from 'vee-validate'
 import { validationFieldsSchema } from '../utils/validation-schema'
 import { HouseListing } from '../types/types'
 import { useRouter } from 'vue-router'
 
-const props = defineProps<{ currentValues: HouseListing; currentImageValue: string | null }>()
+import uploadIcon from '../assets/icons/ic_upload@3x.png'
+import clearWhiteIcon from '../assets/icons/ic_clear_white@3x.png'
+
+const props = defineProps<{ currentValues: HouseListing }>()
 const emit = defineEmits(['on-submit'])
 
-const currentValuesCopy = computed(() => props.currentValues)
+const router = useRouter()
 
+const newImageLink = ref<string | null>(null)
+const newImage = ref<HTMLInputElement | null>(null)
+// need to compute because of v-model
+const currentValuesCopy = computed(() => props.currentValues)
+const currentRoute = router.currentRoute.value.name
 const handleSubmit = (values) => {
   emit('on-submit', values)
 }
-
-const imageData = ref<string | null>(null)
-const newImage = ref<HTMLInputElement | null>(null)
-const newImageLink = ref<string | null>(null)
-const router = useRouter()
-const currentRoute = ref(router.currentRoute.value.name)
-
 const uploadImage = (e) => {
   const file = e.target.files[0]
   if (file) {
@@ -31,7 +29,6 @@ const uploadImage = (e) => {
   }
 }
 const removeImage = () => {
-  imageData.value = null
   newImage.value = null
   newImageLink.value = null
   currentValuesCopy.value.image = null
@@ -46,8 +43,9 @@ const removeImage = () => {
     class="dynamic-form"
     v-slot="{ meta, setFieldValue, errors }"
   >
+    {{ console.log('Set Field Value:', setFieldValue) }}
     <!--STREET NAME INPUT-->
-    <div class="container-input" id="streetName">
+    <div class="container-input" id="streetName_g">
       <label for="streetName">Street Name*</label>
       <Field
         id="streetName"
@@ -60,7 +58,7 @@ const removeImage = () => {
       <ErrorMessage name="streetName" class="error-message" />
     </div>
     <!-- HOUSE NUMBER INPUT -->
-    <div class="container-input" id="houseNumber">
+    <div class="container-input" id="houseNumber_g">
       <label for="houseNumber">House Number*</label>
       <Field
         id="houseNumber"
@@ -73,7 +71,7 @@ const removeImage = () => {
       <ErrorMessage name="houseNumber" class="error-message" />
     </div>
     <!-- HOUSE NUMBER ADDITION INPUT -->
-    <div class="container-input" id="numberAddition">
+    <div class="container-input" id="numberAddition_g">
       <label for="numberAddition">Addition (optional)</label>
       <Field
         id="numberAddition"
@@ -84,7 +82,7 @@ const removeImage = () => {
       />
     </div>
     <!-- ZIP CODE INPUT -->
-    <div class="container-input" id="zip">
+    <div class="container-input" id="zip_g">
       <label for="zip">Postal Code*</label>
       <Field
         id="zip"
@@ -97,7 +95,7 @@ const removeImage = () => {
       <ErrorMessage name="zip" class="error-message" />
     </div>
     <!-- CITY INPUT -->
-    <div class="container-input" id="city">
+    <div class="container-input" id="city_g">
       <label for="city">City*</label>
       <Field
         id="city"
@@ -110,7 +108,7 @@ const removeImage = () => {
       <ErrorMessage name="city" class="error-message" />
     </div>
     <!-- UPLOAD IMAGE INPUT -->
-    <div class="container-input" id="image">
+    <div class="container-input" id="post-image_g">
       <label for="image">Upload picture (PNG or JPG)*</label>
       <Field id="image" name="image" type="file" v-slot="{ field }">
         <input
@@ -150,7 +148,7 @@ const removeImage = () => {
       <ErrorMessage name="image" class="error-message" />
     </div>
     <!-- PRICE INPUT -->
-    <div class="container-input" id="price">
+    <div class="container-input" id="price_g">
       <label for="price">Price*</label>
       <Field
         id="price"
@@ -163,7 +161,7 @@ const removeImage = () => {
       <ErrorMessage name="price" class="error-message" />
     </div>
     <!-- SIZE INPUT -->
-    <div class="container-input" id="size">
+    <div class="container-input" id="size_g">
       <label for="size">Size*</label>
       <Field
         id="size"
@@ -176,7 +174,7 @@ const removeImage = () => {
       <ErrorMessage name="size" class="error-message" />
     </div>
     <!-- GARAGE INPUT -->
-    <div class="container-input" id="hasGarage">
+    <div class="container-input" id="hasGarage_g">
       <label for="hasGarage">Garage*</label>
       <Field
         id="hasGarage"
@@ -193,7 +191,7 @@ const removeImage = () => {
       <ErrorMessage name="hasGarage" class="error-message" />
     </div>
     <!-- BEDROOMS INPUT -->
-    <div class="container-input" id="bedrooms">
+    <div class="container-input" id="bedrooms_g">
       <label for="bedrooms">Bedrooms*</label>
       <Field
         id="bedrooms"
@@ -206,7 +204,7 @@ const removeImage = () => {
       <ErrorMessage name="bedrooms" class="error-message" />
     </div>
     <!-- BATHROOMS INPUT -->
-    <div class="container-input" id="bathrooms">
+    <div class="container-input" id="bathrooms_g">
       <label for="bathrooms">Bathrooms*</label>
       <Field
         id="bathrooms"
@@ -219,7 +217,7 @@ const removeImage = () => {
       <ErrorMessage name="bathrooms" class="error-message" />
     </div>
     <!-- CONSTRUCTION YEAR INPUT -->
-    <div class="container-input" id="constructionYear">
+    <div class="container-input" id="constructionYear_g">
       <label for="constructionYear">Construction date*</label>
       <Field
         id="constructionYear"
@@ -232,7 +230,7 @@ const removeImage = () => {
       <ErrorMessage name="constructionYear" class="error-message" />
     </div>
     <!-- DESCRIPTION INPUT -->
-    <div class="container-input" id="description">
+    <div class="container-input" id="description_g">
       <label for="description">Description*</label>
       <Field
         id="description"
@@ -246,7 +244,7 @@ const removeImage = () => {
       <ErrorMessage name="description" class="error-message" />
     </div>
     <button
-      class="post-btn"
+      class="post-btn_g"
       :class="{ 'post-button-disabled': !meta.valid }"
       :disabled="!meta.valid"
       type="submit"
@@ -263,7 +261,7 @@ const removeImage = () => {
   margin-top: 30px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 2fr 1fr;
+  grid-template-rows: 90px 90px 90px 90px 190px 90px 90px 90px 90px 200px 90px;
   align-items: start;
   gap: 10px 20px;
   grid-auto-flow: row;
@@ -280,55 +278,56 @@ const removeImage = () => {
     'description description'
     '. button';
 }
-#streetName {
+#streetName_g {
   grid-area: streetName;
 }
-#numberAddition {
+#numberAddition_g {
   grid-area: numberAddition;
 }
-#houseNumber {
+#houseNumber_g {
   grid-area: houseNumber;
 }
-#zip {
+#zip_g {
   grid-area: zip;
 }
-#city {
+#city_g {
   grid-area: city;
 }
-#post-image {
+#post-image_g {
   grid-area: image;
 }
-#price {
+#price_g {
   grid-area: price;
 }
-#size {
+#size_g {
   grid-area: size;
 }
-#hasGarage {
+#hasGarage_g {
   grid-area: hasGarage;
 }
-#bedrooms {
+#bedrooms_g {
   grid-area: bedrooms;
 }
-#bathrooms {
+#bathrooms_g {
   grid-area: bathrooms;
 }
-#constructionYear {
+#constructionYear_g {
   grid-area: constructionYear;
 }
-#description {
+#description_g {
   grid-area: description;
 }
-.post-btn {
+.post-btn_g {
   grid-area: button;
 }
-#hasGarage {
+#hasGarage_g {
   position: relative;
 }
 
 select {
   background: url('../assets/icons/up-and-down.svg') no-repeat var(--element-background-2);
   background-size: 16px;
+  margin-top: 8px;
   background-position: calc(100% - 0.75rem) center !important;
   appearance: none !important;
   padding-right: 2rem !important;
@@ -376,8 +375,7 @@ select option[value=''] {
     font-weight: 400;
   }
   & label {
-    margin-bottom: 12px;
-    margin-top: 12px;
+    color: var(--element-secondary);
   }
   & .input-error {
     border: 1px solid var(--element-primary);
@@ -436,11 +434,12 @@ select option[value=''] {
     appearance: textfield;
   }
   & input {
+    margin-top: 8px;
     width: 100%;
   }
 }
 
-.post-btn {
+.post-btn_g {
   width: 200px;
   padding: 15px 20px;
   border: none;
@@ -461,6 +460,7 @@ select option[value=''] {
 .file-input-button {
   width: 150px;
   height: 150px;
+  margin-top: 8px;
   background-color: transparent;
   border: 2px dashed var(--element-tertiary-2);
   display: flex;
@@ -474,6 +474,7 @@ select option[value=''] {
 .uploaded-image {
   width: 150px;
   height: 150px;
+  margin-top: 12px;
   object-fit: cover;
   border-radius: 8px;
 }
@@ -481,7 +482,7 @@ select option[value=''] {
   position: absolute;
   width: 40px;
   left: 116px;
-  top: auto;
+  top: 8px;
   transform: translate(13px, -10px);
   cursor: pointer;
 }
@@ -489,6 +490,8 @@ select option[value=''] {
 @media (max-width: 992px) {
   .dynamic-form {
     width: 100%;
+    grid-template-rows: 1.1fr 1.1fr 1.1fr 1.1fr 2fr 1.1fr 1.1fr 1.1fr 1.1fr 2.3fr 1.1fr;
+    gap: 0px 16px;
     grid-template-areas:
       'streetName streetName'
       'houseNumber numberAddition'
@@ -502,7 +505,7 @@ select option[value=''] {
       'description description'
       'button button';
   }
-  .post-btn {
+  .post-btn_g {
     width: 100%;
     font-size: 12px;
   }

@@ -52,7 +52,7 @@ const navigationRoutes: headerMobileLinks[] = [
   justify-content: space-around;
   background-color: var(--element-background-2);
   font-family: 'Montserrat', sans-serif;
-  height: 10vh;
+  height: 12vh;
   bottom: 0;
   z-index: 999;
   align-items: center;
