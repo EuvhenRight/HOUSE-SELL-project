@@ -1,13 +1,12 @@
-import axios, { AxiosRequestConfig, Method } from 'axios'
-//Add types
+import type { AxiosRequestConfig, Method } from 'axios'
+import axios from 'axios'
+// CREATE A CUSTOM API SERVICE MIDDLEWARE
 interface ApiServiceResponse<T> {
   data: T
 }
-
 const createHeaders = () => ({
   'X-Api-Key': import.meta.env.VITE_API_KEY
 })
-
 const createConfig = (
   url: string,
   method: Method,

@@ -3,7 +3,6 @@ export interface headerLinks {
   title: string
   path: string
 }
-
 export interface headerMobileLinks {
   name: string
   title: string
@@ -11,7 +10,6 @@ export interface headerMobileLinks {
   icon: string
   iconActive: string
 }
-
 export interface HouseData {
   id: number
   image: string

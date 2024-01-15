@@ -9,7 +9,7 @@ import EditDeleteButtons from './Edit-delete-buttons.vue'
 
 const props = defineProps<{ house: HouseData }>()
 
-function convertPrice(price) {
+function convertPrice(price: number) {
   return new Intl.NumberFormat('en-DE').format(price)
 }
 </script>

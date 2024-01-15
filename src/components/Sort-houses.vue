@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useHousesStore } from '../stores/store'
+
 import iconArrow from '../assets/icons/ic_up-arrow.svg'
 
 const houseStore = useHousesStore()
@@ -60,21 +61,18 @@ const houseStore = useHousesStore()
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
 }
-
 .price-list {
   border-radius: 5px 0 0 5px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 .size-list {
   border-radius: 0 5px 5px 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 li.active-list {
   background-color: var(--element-primary);
   display: flex;
@@ -89,7 +87,6 @@ li.active-list {
   margin-left: 5px;
   width: 15px;
 }
-
 @media (max-width: 806px) {
   .sort-list li {
     width: 100%;

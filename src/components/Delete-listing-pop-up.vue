@@ -5,12 +5,12 @@ import { onMounted, onUnmounted, ref } from 'vue'
 
 const props = defineProps<{ houseId: number }>()
 const emit = defineEmits(['close-pop-up'])
-const containerRef = ref<HTMLElement | null>(null)
-const housesStore = useHousesStore()
 
+const housesStore = useHousesStore()
+const containerRef = ref<HTMLElement | null>(null)
 const router = useRouter()
-const id = props.houseId
 const currentRout = router.currentRoute.value.name === 'Home'
+const id = props.houseId
 
 const handleClickInside = (event: MouseEvent) => {
   if (containerRef.value && !containerRef.value?.contains(event.target as HTMLElement)) {
@@ -20,18 +20,15 @@ const handleClickInside = (event: MouseEvent) => {
 onMounted(() => {
   document.addEventListener('click', handleClickInside)
 })
-
 onUnmounted(() => {
   document.removeEventListener('click', handleClickInside)
 })
-
-// fetch delete house by id
+// FETCH DELETE HOUSE BY ID
 const deleteHouse = async (id: number) => {
   await housesStore.deleteHouseItem(id)
   currentRout ? emit('close-pop-up') : router.push({ name: 'Home' })
   await housesStore.getDataHouses()
 }
-
 const onClosePopUp = () => {
   emit('close-pop-up')
 }

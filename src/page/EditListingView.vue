@@ -1,25 +1,28 @@
 <script setup lang="ts">
-import BackToPages from '../components/Back-to-pages.vue'
-import DynamicForm from '../components/Dynamic-form.vue'
-
 import { ref, onMounted } from 'vue'
 import { useHousesStore } from '../stores/store'
 import { useRouter, useRoute } from 'vue-router'
+
+import BackToPages from '../components/Back-to-pages.vue'
+import DynamicForm from '../components/Dynamic-form.vue'
+
 import type { HouseListing } from '../types/types'
 
 const housesStore = useHousesStore()
 const currentValues = ref({})
-
 const newEditedHouse = ref<HouseListing>()
+
 const router = useRouter()
 const route = useRoute()
+
+// ASSUMING YOU HAVE 'id' AVAILABLE
 const rawId = route.params.id as string
 const id = parseInt(rawId, 10)
-// Promises and timeouts
+// PROMISES AND TIMEOUTS
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 onMounted(async () => {
-  // Fetch the house data by ID and set it as initial values
+  // FETCH VALUES OF HOUSE BY ID FROM STORE
   await housesStore.getHouseById(id)
 
   currentValues.value = {
@@ -41,7 +44,7 @@ onMounted(async () => {
     price: housesStore.houseData[0].price
   }
 })
-console.log(currentValues.value, 'currentValues')
+// SUBMIT FORM
 const submitForm = async (values) => {
   try {
     const formData = new FormData()
@@ -73,31 +76,29 @@ const submitForm = async (values) => {
     formData.append('hasGarage', hasGarage)
     formData.append('description', description)
 
-    console.log(values, 'values')
-    // Update the existing house data
+    // POST FORM DATA TO API
     await housesStore.postEditHouse(id, formData)
-
+    // ADDED EDIT DATA OF HOUSE TO STORE
     if (housesStore.editHouse) {
       newEditedHouse.value = housesStore?.editHouse
     }
 
     const formUploadImage = new FormData()
-
+    // UPLOAD IMAGE IF CHECK "BLOP" IS TRUE
     if (values.image instanceof Blob) {
       formUploadImage.append('image', image, image.name)
 
-      await delay(1000) // Adjust the delay as needed
-      // Upload image after 1 second
-
+      // UPLOAD IMAGE AFTER WAITING 1 SECOND
+      await delay(1000)
       await housesStore.postEditUploadImage(housesStore.houseData[0].id, formUploadImage)
     }
-    // Redirect to house details with id
+    // REDIRECT TO HOUSE DETAILS BY ID
     router.push({ name: 'HouseDetails', params: { id: newEditedHouse.value?.id } })
   } catch (error) {
     console.error('Error during form submission:', error)
   }
 }
-const handleSubmit = (values) => {
+const handleSubmit = (values: HouseListing) => {
   submitForm(values)
 }
 </script>

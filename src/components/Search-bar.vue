@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import IconClean from '../assets/icons/ic_clear@3x.png'
 import { useHousesStore } from '../stores/store'
+
+import IconClean from '../assets/icons/ic_clear@3x.png'
+
 const housesStore = useHousesStore()
-// delete value in search bar
+// DELETE VALUE FROM INPUT
 const inputClear = () => {
   housesStore.searchValue = null
   housesStore.filteredHouses
 }
-// search
+// SEARCH VALUE FROM INPUT
 const inputSearch = () => {
   housesStore.filteredHouses
 }
@@ -38,7 +40,6 @@ const inputSearch = () => {
   display: flex;
   align-items: center;
 }
-
 .icon-clean {
   position: absolute;
   right: 15px;
@@ -60,14 +61,12 @@ const inputSearch = () => {
   font-weight: 400;
   display: flex;
 }
-
 .icon-clean:hover {
   cursor: pointer;
   opacity: 1;
   transition: 0.3s ease-in-out;
   transform: scale(1.1);
 }
-
 @media (max-width: 806px) {
   .wrapper-search-bar {
     width: 100%;

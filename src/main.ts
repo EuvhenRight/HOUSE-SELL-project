@@ -10,11 +10,13 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
+// ANIMATIONS
 app.use(autoAnimatePlugin)
 app.mount('#app')
 
+// DYNAMIC TITLE
 router.beforeEach((to) => {
-  document.title = to.meta.title ?? 'Real Estate'
+  document.title = (to.meta.title as string) ?? 'Real Estate'
 
   window.scrollTo({
     top: 0,

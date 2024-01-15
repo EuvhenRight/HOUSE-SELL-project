@@ -6,6 +6,7 @@ import imageIcon from '../assets/images/img_placeholder_house@3x.png'
 </script>
 
 <template>
+  <!-- SHOW RECOMMENDED HOUSE LIKE FOR EXAMPLE -->
   <div class="container-card-item">
     <div class="card-item">
       <div class="info-block">

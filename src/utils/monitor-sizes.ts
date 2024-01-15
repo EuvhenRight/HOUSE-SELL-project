@@ -4,7 +4,7 @@ const BREAKPOINTS = {
   LABELS: ['base', 'xs', 'sm', 'md', 'lg', 'xl'],
   VALUES: [0, 480, 768, 992, 1280, 1536]
 }
-// function to monitor window size
+// FUNCTION TO MONITOR BREAKPOINTS SIZES
 export function useMonitorSize() {
   const sizes = reactive({
     base: false,
@@ -28,7 +28,7 @@ export function useMonitorSize() {
 
   onMounted(() => {
     window.addEventListener('resize', updateSizes)
-    updateSizes() // Initial sizing
+    updateSizes() // INITIAL CALL
   })
 
   onUnmounted(() => {

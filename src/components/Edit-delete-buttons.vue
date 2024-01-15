@@ -12,12 +12,14 @@ import DeleteListingPopUp from '../components/Delete-listing-pop-up.vue'
 import type { HouseData } from '../types/types'
 
 const props = defineProps<{ house: HouseData }>()
-
+// MONITOR SIZE MIDDLEWARE
+const { base, xs, sm } = useMonitorSize()
+// STATE VARIABLES
 const popUpCurrentBehavior = ref<boolean>(false)
 
-const { base, xs, sm } = useMonitorSize()
 const route = useRoute()
 const currentRoute = route.name === 'Home'
+
 const toggleOpenDelPopUp = () => {
   popUpCurrentBehavior.value = true
 }
@@ -87,7 +89,7 @@ const toggleCloseDelPopUp = () => {
     }
   }
 }
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .container-btn {
     & button {
       margin: 10px 10px 0 0;

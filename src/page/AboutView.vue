@@ -90,33 +90,33 @@ import Logo from '../assets/images/img_logo_dtt@3x.png'
     width: 100%;
     padding: 0 20px;
   }
+}
 
-  @media screen and (max-width: 992px) {
-    .title-about-header {
-      font-size: 32px;
-      display: flex;
-      margin-bottom: 30px;
-      justify-content: center;
-    }
-    .about-header {
-      display: flex;
-      font-size: 18px;
-    }
-    .design-development-about {
-      font-size: 18px;
-    }
-    .container-logo img {
-      width: 176px;
-    }
-    .mobile-version {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      display: flex;
-      margin-bottom: 50px;
-    }
-    .container-about-view {
-      margin-bottom: 120px;
-    }
+@media screen and (max-width: 992px) {
+  .title-about-header {
+    font-size: 32px;
+    display: flex;
+    margin-bottom: 30px;
+    justify-content: center;
+  }
+  .about-header {
+    display: flex;
+    font-size: 18px;
+  }
+  .design-development-about {
+    font-size: 18px;
+  }
+  .container-logo img {
+    width: 176px;
+  }
+  .mobile-version {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    display: flex;
+    margin-bottom: 50px;
+  }
+  .container-about-view {
+    margin-bottom: 120px;
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import type { headerLinks } from '../types/types'
-
+// STATE VARIABLES for NAVIGATION
 const navigationRoutes: headerLinks[] = [
   {
     name: 'Houses',

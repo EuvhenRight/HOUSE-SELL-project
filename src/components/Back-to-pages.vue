@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import { useMonitorSize } from '../utils/monitor-sizes'
-
 import ArrowBack from '../assets/icons/ic_back_grey@3x.png'
 import ArrowWithWhite from '../assets/icons/ic_back_white@3x.png'
 
-const { base, xs, sm } = useMonitorSize()
-const router = useRouter()
+import { useRoute } from 'vue-router'
+import { useMonitorSize } from '../utils/monitor-sizes'
 
-const editPageRoute = router.currentRoute.value.name === 'editListing'
-// setup arrow image
+const { base, xs, sm } = useMonitorSize()
+const route = useRoute()
+// SETUP CURRENT ROUTE
+const editPageRoute = route.name === 'editListing'
+// SETUP CURRENT ARROW
 const currentArrow = () => {
-  return router.currentRoute.value.name === 'HouseDetails' ? ArrowWithWhite : ArrowBack
+  return route.name === 'HouseDetails' ? ArrowWithWhite : ArrowBack
 }
 </script>
 

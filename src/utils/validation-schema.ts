@@ -1,6 +1,6 @@
 import * as Yup from 'yup'
 
-// In your component or wherever you are using Yup validation
+// VALIDATION SCHEMA
 const maxFileSize = import.meta.env.VITE_APP_MAX_FILE_SIZE
 
 export const validationFieldsSchema = Yup.object({
@@ -16,9 +16,9 @@ export const validationFieldsSchema = Yup.object({
     .required('Required field missing.')
     .test('is-valid-size', 'Max allowed size is 5MB', (value) => {
       if (typeof value === 'object') {
-        const fileValue = value as { size?: number } // Type assertion
+        const fileValue = value as { size?: number }
 
-        // Check if 'size' is defined before comparing
+        // CHECK FILE SIZE LIMIT
         return fileValue && fileValue.size !== undefined && fileValue.size <= Number(maxFileSize)
       } else {
         return true

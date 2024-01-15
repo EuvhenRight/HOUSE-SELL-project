@@ -2,26 +2,29 @@
 import { ref, computed } from 'vue'
 import { ErrorMessage, Field, Form } from 'vee-validate'
 import { validationFieldsSchema } from '../utils/validation-schema'
-import type { HouseListing } from '../types/types'
 import { useRoute } from 'vue-router'
 
 import uploadIcon from '../assets/icons/ic_upload@3x.png'
 import clearWhiteIcon from '../assets/icons/ic_clear_white@3x.png'
+import type { HouseListing } from '../types/types'
 
 const props = defineProps<{ currentValues: HouseListing }>()
 const emit = defineEmits(['on-submit'])
 
-const route = useRoute()
 const newImageLink = ref<string | null>(null)
 const newImage = ref<HTMLInputElement | null>(null)
-// need to compute because of v-model
+
+// COMPUTED VALUES BECAUSE OF V-MODEL
 const currentValuesCopy = computed(() => props.currentValues)
 
+const route = useRoute()
 const currentRoute = route.name === 'editListing'
 
+// SUBMIT HANDLER VALUES OF THE FORM
 const handleSubmit = (values) => {
   emit('on-submit', values)
 }
+
 const uploadImage = (e) => {
   const file = e.target.files[0]
   if (file) {
@@ -29,7 +32,6 @@ const uploadImage = (e) => {
     newImageLink.value = URL.createObjectURL(file)
   }
 }
-
 const removeImage = () => {
   if (newImage?.value) {
     newImage.value.value = '' // Resetting the input file field
@@ -265,7 +267,7 @@ const removeImage = () => {
 </template>
 
 <style scoped lang="scss">
-// the main layout for the dynamic form
+// GRID LAYOUT FOR FORM
 .dynamic-form {
   width: 400px;
   margin-top: 30px;
@@ -333,7 +335,7 @@ const removeImage = () => {
 #hasGarage_g {
   position: relative;
 }
-
+// ADDED SPECIFIC STYLING TO SELECT INPUT
 select {
   background: url('../assets/icons/up-and-down.svg') no-repeat var(--element-background-2);
   background-size: 16px;
@@ -356,7 +358,7 @@ select option[value=''] {
   font-style: italic;
   margin-top: 7px;
 }
-// the inputs for the dynamic form
+// INPUT STYLING
 .container-input {
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
@@ -390,7 +392,7 @@ select option[value=''] {
   & .input-error {
     border: 1px solid var(--element-primary);
   }
-  // the error message for the input red color
+  // THE ERROR MESSAGE FOR THE INPUTS
   & .input-error::placeholder {
     color: var(--element-primary);
   }
@@ -402,7 +404,7 @@ select option[value=''] {
     /* Microsoft Edge */
     color: var(--element-primary);
   }
-  // the error message for the textarea red color
+  // THE ERROR MESSAGE FOR THE TEXTAREA
   & textarea .input-error::placeholder {
     color: var(--element-primary);
   }
@@ -448,7 +450,6 @@ select option[value=''] {
     width: 100%;
   }
 }
-
 .post-btn_g {
   width: 200px;
   padding: 15px 20px;
@@ -466,7 +467,6 @@ select option[value=''] {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
 .file-input-button {
   width: 150px;
   height: 150px;
@@ -497,7 +497,8 @@ select option[value=''] {
   cursor: pointer;
 }
 
-@media (max-width: 992px) {
+@media screen and (max-width: 992px) {
+  // FLEXIBILITY FOR FORM
   .dynamic-form {
     width: 100%;
     grid-template-rows: 1.1fr 1.1fr 1.1fr 1.1fr 2fr 1.1fr 1.1fr 1.1fr 1.1fr 2.3fr 1.1fr;

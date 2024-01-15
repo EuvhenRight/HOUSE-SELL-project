@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import BackToPages from '../components/Back-to-pages.vue'
-import DynamicForm from '../components/Dynamic-form.vue'
-
 import { ref } from 'vue'
 import { useHousesStore } from '../stores/store'
 import { useRouter } from 'vue-router'
+
+import BackToPages from '../components/Back-to-pages.vue'
+import DynamicForm from '../components/Dynamic-form.vue'
+
 import type { HouseListing } from '../types/types'
 
 const housesStore = useHousesStore()
 const currentValues = ref({})
 const newCreatedHouse = ref<HouseListing>()
 const router = useRouter()
-// Promises and timeouts
+// PROMISES AND TIMEOUTS
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const submitForm = async (values) => {
@@ -46,20 +47,21 @@ const submitForm = async (values) => {
     formData.append('hasGarage', hasGarage)
     formData.append('description', description)
 
+    // FETCH VALUES OF HOUSE BY ID TO STORE
     await housesStore.postCreateHouse(formData)
     if (housesStore.newHouse) {
       newCreatedHouse.value = housesStore?.newHouse
     }
+    // UPLOAD IMAGE
     const formUploadImage = new FormData()
     formUploadImage.append('image', image, image.name)
-
-    await delay(1000) // Adjust the delay as needed
-    // Upload image after 1 second
+    // UPLOAD IMAGE AFTER 1 SECOND
+    await delay(1000)
 
     if (housesStore.newHouse?.id) {
       await housesStore.postUploadImage(housesStore.newHouse.id, formUploadImage)
     }
-    // Redirect to house details with id
+    // REDIRECT TO HOUSE DETAILS PAGE
     router.push({ name: 'HouseDetails', params: { id: newCreatedHouse.value?.id } })
   } catch (error) {
     console.error('Error during form submission:', error)

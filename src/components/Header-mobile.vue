@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+
 import Home from '../assets/icons/ic_mobile_navigarion_home@3x.png'
 import HomeActive from '../assets/icons/ic_mobile_navigarion_home_active@3x.png'
 import About from '../assets/icons/ic_mobile_navigarion_info@3x.png'
 import AboutActive from '../assets/icons/ic_mobile_navigarion_info_active@3x.png'
 import type { headerMobileLinks } from '../types/types'
-
+// STATE VARIABLES FOR NAVIGATION
 const navigationRoutes: headerMobileLinks[] = [
   {
     name: 'Houses',

@@ -133,7 +133,6 @@ h2 {
     padding: 0 20px;
   }
 }
-
 @media screen and (max-width: 992px) {
   .container-home-view {
     width: 100%;

@@ -13,21 +13,22 @@ import EditDeleteButtons from '../components/Edit-delete-buttons.vue'
 import { useRoute } from 'vue-router'
 import { useHousesStore } from '../stores/store'
 import { onMounted, ref } from 'vue'
+import type { HouseData } from '../types/types'
 
-// size monitor view
 const housesStore = useHousesStore()
 const route = useRoute()
+// ASSUMING YOU HAVE 'id' AVAILABLE
 const rawId = route.params.id as string
-// Assuming you have 'id' available
 const id = parseInt(rawId, 10)
-const data = ref()
+
+const data = ref<HouseData[] | null>(null)
 
 onMounted(async () => {
   await housesStore.getHouseById(id)
   data.value = housesStore.houseData
 })
 
-function convertPrice(price) {
+function convertPrice(price: number) {
   return new Intl.NumberFormat('en-DE').format(price)
 }
 </script>
@@ -43,6 +44,7 @@ function convertPrice(price) {
             <div class="house-address">
               {{ house?.location.street }} {{ house?.location.houseNumber }}
               {{
+                // FILL FORM NUMBERADDITION, BUT I GET FROM BACKEND HOUSENUMBERADDITION
                 house?.location.houseNumberAddition === 'undefined'
                   ? ''
                   : house?.location.houseNumberAddition

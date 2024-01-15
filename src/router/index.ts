@@ -6,7 +6,7 @@ import HouseDetails from '../page/HouseDetailsView.vue'
 import CreateNewListing from '../page/NewListingView.vue'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.VITE_API_MAIN_URL),
   routes: [
     {
       path: '/',

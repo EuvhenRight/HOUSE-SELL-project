@@ -6,18 +6,19 @@ import { apiService } from './../utils/api-service'
 export const useHousesStore = defineStore('HouseStore', {
   state: () => {
     return {
-      housesData: [] as HouseData[],
-      houseData: {} as HouseData,
-      sortedBy: null as boolean | null, // triggered by price or size
-      searchData: [] as HouseData[],
-      searchValue: null as string | null, // Search value input field
-      newHouse: {} as HouseListing | null,
-      editHouse: {} as HouseListing | null,
-      changePrice: true as boolean,
-      changeSize: true as boolean
+      housesData: [] as HouseData[], // HOUSE DATA ARRAY STATE
+      houseData: {} as HouseData, // HOUSE DATA STATE
+      sortedBy: null as boolean | null, // TRIGGER SORT STATE
+      searchData: [] as HouseData[], // SEARCH DATA ARRAY
+      searchValue: null as string | null, // SEARCH VALUE STATE
+      newHouse: {} as HouseListing | null, // NEW HOUSE STATE
+      editHouse: {} as HouseListing | null, // EDIT HOUSE STATE
+      changePrice: true as boolean, // CHANGE PRICE STATE
+      changeSize: true as boolean // CHANGE SIZE STATE
     }
   },
   getters: {
+    // SEARCH DATA ARRAY GETTER
     searchHousesCount: (state) => state.searchData.length,
     filteredHouses: (state) => {
       const searchData = state.housesData.filter((house) => {
@@ -40,6 +41,7 @@ export const useHousesStore = defineStore('HouseStore', {
     }
   },
   actions: {
+    // ACTIONS FOR HOUSES
     async getDataHouses() {
       try {
         const response = await apiService<HouseData[]>(import.meta.env.VITE_API_MAIN_URL, 'GET')
@@ -116,22 +118,21 @@ export const useHousesStore = defineStore('HouseStore', {
       }
     },
     sortHousesByPrice(): void {
-      // Toggle sorting order
+      // TOGGLE SORTING ORDER
       this.changePrice = !this.changePrice
-      // Set rotatingIcon to true when sorting is active
 
-      // Sort by price
+      // SORT BY PRICE
       if (this.changePrice) {
         this.housesData.sort((a, b) => a.price - b.price)
       } else {
         this.housesData.sort((a, b) => b.price - a.price)
       }
-      // Trigger a reactivity update
+      // TRIGGER A REACTIVITY UPDATE
       this.housesData = [...this.housesData]
       this.sortedBy = true
     },
     sortHousesBySize(): void {
-      // Toggle sorting order
+      // TOGGLE SORTING ORDER
       this.changeSize = !this.changeSize
 
       if (this.changeSize) {
@@ -139,8 +140,7 @@ export const useHousesStore = defineStore('HouseStore', {
       } else {
         this.housesData.sort((a, b) => b.size - a.size)
       }
-
-      // Trigger a reactivity update
+      // TRIGGER A REACTIVITY UPDATE
       this.housesData = [...this.housesData]
       this.sortedBy = false
     }
