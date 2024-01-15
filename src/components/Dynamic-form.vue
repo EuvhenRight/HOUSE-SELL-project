@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue'
 import { ErrorMessage, Field, Form } from 'vee-validate'
 import { validationFieldsSchema } from '../utils/validation-schema'
-import { HouseListing } from '../types/types'
+import type { HouseListing } from '../types/types'
 import { useRoute } from 'vue-router'
 
 import uploadIcon from '../assets/icons/ic_upload@3x.png'

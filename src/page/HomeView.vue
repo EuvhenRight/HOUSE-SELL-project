@@ -134,7 +134,7 @@ h2 {
   }
 }
 
-@media (max-width: 992px) {
+@media screen and (max-width: 992px) {
   .container-home-view {
     width: 100%;
     padding: 40px 20px;
@@ -152,9 +152,17 @@ h2 {
     margin-top: 30px;
   }
 }
-@media (max-width: 806px) {
+@media screen and (max-width: 806px) {
   .container-sort-view {
     flex-direction: column;
+  }
+  .container-home-view {
+    margin-bottom: 50px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .container-home-view {
+    margin-bottom: 0;
   }
 }
 </style>

@@ -101,14 +101,21 @@ const handleSubmit = (values) => {
     padding: 0 20px;
   }
 }
-@media (max-width: 992px) {
+@media screen and (max-width: 992px) {
   .container-listing-view {
     width: 100%;
-    padding: 40px 20px;
+    padding: 60px 20px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 30px;
+  }
+  @media screen and (max-width: 480px) {
+    .container-listing-view {
+      padding: 80px 20px;
+      margin-bottom: 0;
+    }
   }
 }
 </style>

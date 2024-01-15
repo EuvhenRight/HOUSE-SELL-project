@@ -184,7 +184,7 @@ function convertPrice(price) {
   margin-bottom: 50px;
 }
 
-@media (min-width: 992px) and (max-width: 1319px) {
+@media (min-width: 992px) and (max-width: 1321px) {
   .container-house-details {
     width: 100%;
     padding: 0 20px;
@@ -196,7 +196,6 @@ function convertPrice(price) {
 
   .house-recommended-container {
     padding: 100px 0 0 50px;
-    margin-bottom: 50px;
   }
 }
 
@@ -205,6 +204,7 @@ function convertPrice(price) {
     width: 100%;
     display: flex;
     flex-direction: column;
+    margin-bottom: 50px;
   }
   .house-details-main {
     width: 100%;
@@ -225,6 +225,11 @@ function convertPrice(price) {
   }
   .house-details-content {
     position: static;
+  }
+}
+@media screen and (max-width: 480px) {
+  .container-house-details {
+    margin-bottom: 0;
   }
 }
 </style>

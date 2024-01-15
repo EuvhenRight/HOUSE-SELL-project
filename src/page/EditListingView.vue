@@ -102,11 +102,11 @@ const handleSubmit = (values) => {
 }
 </script>
 <template>
-  <div class="background-listing">
-    <div class="container-listing-view">
+  <div class="background-edit-listing">
+    <div class="container-edit-listing-view">
       <div class="wrapper-back-to-pages">
         <BackToPages />
-        <h2 class="title-listing">Edit listing</h2>
+        <h2 class="title-edit-listing">Edit listing</h2>
       </div>
       <DynamicForm @on-submit="handleSubmit" :currentValues="currentValues" />
     </div>
@@ -114,33 +114,40 @@ const handleSubmit = (values) => {
 </template>
 
 <style scoped lang="scss">
-.container-listing-view {
+.container-edit-listing-view {
   margin: 0 auto;
   width: 1320px;
 }
-.background-listing {
+.background-edit-listing {
   background-image: url(../assets/images/img_background@3x.png);
   background-repeat: no-repeat;
   background-size: cover;
 }
-.title-listing {
+.title-edit-listing {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
 }
 @media (min-width: 993px) and (max-width: 1321px) {
-  .container-listing-view {
+  .container-edit-listing-view {
     width: 100%;
     padding: 0 20px;
   }
 }
-@media (max-width: 992px) {
-  .container-listing-view {
+@media screen and (max-width: 992px) {
+  .container-edit-listing-view {
     width: 100%;
-    padding: 40px 20px;
+    padding: 60px 20px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 30px;
+  }
+  @media screen and (max-width: 480px) {
+    .container-edit-listing-view {
+      padding: 80px 20px;
+      margin-bottom: 0;
+    }
   }
 }
 </style>

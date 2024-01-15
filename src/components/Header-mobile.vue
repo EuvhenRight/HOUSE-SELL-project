@@ -52,7 +52,7 @@ const navigationRoutes: headerMobileLinks[] = [
   justify-content: space-around;
   background-color: var(--element-background-2);
   font-family: 'Montserrat', sans-serif;
-  height: 12vh;
+  height: 18vh;
   bottom: 0;
   z-index: 999;
   align-items: center;
@@ -60,6 +60,11 @@ const navigationRoutes: headerMobileLinks[] = [
 
   & img {
     width: 2rem;
+  }
+}
+@media screen and (max-width: 992px) {
+  .header-nav-mobile {
+    height: 10vh;
   }
 }
 </style>
