@@ -25,7 +25,7 @@ export interface HouseData {
   location: {
     street: string
     houseNumber: number
-    houseNumberAddition: string | null
+    numberAddition: string | null
     city: string
     zip: string
   }

@@ -45,7 +45,7 @@ const router = createRouter({
       name: 'editListing',
       component: EditListing,
       meta: {
-        title: 'Create House'
+        title: 'Edit House'
       }
     }
   ]

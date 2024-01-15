@@ -13,7 +13,8 @@ export const useHousesStore = defineStore('HouseStore', {
       searchValue: null as string | null, // Search value input field
       newHouse: {} as HouseListing | null,
       editHouse: {} as HouseListing | null,
-      ascendingOrder: true as boolean
+      changePrice: true as boolean,
+      changeSize: true as boolean
     }
   },
   getters: {
@@ -116,11 +117,11 @@ export const useHousesStore = defineStore('HouseStore', {
     },
     sortHousesByPrice(): void {
       // Toggle sorting order
-      this.ascendingOrder = !this.ascendingOrder
+      this.changePrice = !this.changePrice
       // Set rotatingIcon to true when sorting is active
 
       // Sort by price
-      if (this.ascendingOrder) {
+      if (this.changePrice) {
         this.housesData.sort((a, b) => a.price - b.price)
       } else {
         this.housesData.sort((a, b) => b.price - a.price)
@@ -131,9 +132,9 @@ export const useHousesStore = defineStore('HouseStore', {
     },
     sortHousesBySize(): void {
       // Toggle sorting order
-      this.ascendingOrder = !this.ascendingOrder
+      this.changeSize = !this.changeSize
 
-      if (this.ascendingOrder) {
+      if (this.changeSize) {
         this.housesData.sort((a, b) => a.size - b.size)
       } else {
         this.housesData.sort((a, b) => b.size - a.size)

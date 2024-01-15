@@ -9,6 +9,7 @@ import type { HouseListing } from '../types/types'
 
 const housesStore = useHousesStore()
 const currentValues = ref({})
+
 const newEditedHouse = ref<HouseListing>()
 const router = useRouter()
 const route = useRoute()
@@ -25,9 +26,9 @@ onMounted(async () => {
     streetName: housesStore.houseData[0].location.street,
     houseNumber: housesStore.houseData[0].location.houseNumber,
     numberAddition:
-      housesStore.houseData[0].location.numberAddition === undefined
+      housesStore.houseData[0].location.houseNumberAddition === 'undefined'
         ? ''
-        : housesStore.houseData[0].location.numberAddition,
+        : housesStore.houseData[0].location.houseNumberAddition,
     zip: housesStore.houseData[0].location.zip,
     city: housesStore.houseData[0].location.city,
     constructionYear: housesStore.houseData[0].constructionYear,
@@ -40,7 +41,7 @@ onMounted(async () => {
     price: housesStore.houseData[0].price
   }
 })
-
+console.log(currentValues.value, 'currentValues')
 const submitForm = async (values) => {
   try {
     const formData = new FormData()
@@ -72,19 +73,24 @@ const submitForm = async (values) => {
     formData.append('hasGarage', hasGarage)
     formData.append('description', description)
 
+    console.log(values, 'values')
     // Update the existing house data
     await housesStore.postEditHouse(id, formData)
 
     if (housesStore.editHouse) {
       newEditedHouse.value = housesStore?.editHouse
     }
+
     const formUploadImage = new FormData()
-    formUploadImage.append('image', image, image.name)
 
-    await delay(1000) // Adjust the delay as needed
-    // Upload image after 1 second
+    if (values.image instanceof Blob) {
+      formUploadImage.append('image', image, image.name)
 
-    await housesStore.postEditUploadImage(housesStore.houseData[0].id, formUploadImage)
+      await delay(1000) // Adjust the delay as needed
+      // Upload image after 1 second
+
+      await housesStore.postEditUploadImage(housesStore.houseData[0].id, formUploadImage)
+    }
     // Redirect to house details with id
     router.push({ name: 'HouseDetails', params: { id: newEditedHouse.value?.id } })
   } catch (error) {

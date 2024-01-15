@@ -50,7 +50,7 @@ export const validationFieldsSchema = Yup.object({
     .integer('Must be a whole number (no decimals)')
     .positive('Must be a positive number')
     .test('len', 'Must be exactly 4 characters', (val) => val.toString().length === 4)
-    .min(1801, 'Must be greater than or equal to 1901')
+    .min(1901, 'Must be greater than or equal to 1901')
     .max(2024, 'Must be less than or equal to 2024'),
   description: Yup.string().required('Required field missing.').trim()
 })

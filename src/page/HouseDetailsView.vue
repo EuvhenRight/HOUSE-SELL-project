@@ -40,7 +40,14 @@ function convertPrice(price) {
         <img class="house-details-img" :src="house?.image" alt="HouseImage" />
         <div class="house-details-content">
           <div class="wrapper-house-address">
-            <div class="house-address">{{ house?.location.street }}</div>
+            <div class="house-address">
+              {{ house?.location.street }} {{ house?.location.houseNumber }}
+              {{
+                house?.location.houseNumberAddition === 'undefined'
+                  ? ''
+                  : house?.location.houseNumberAddition
+              }}
+            </div>
             <div v-if="house?.madeByMe">
               <EditDeleteButtons :house="house" />
             </div>
@@ -60,7 +67,7 @@ function convertPrice(price) {
               <span
                 ><img :src="constructionIcon" alt="Construction Icon" class="house-details-icons"
               /></span>
-              <p class="details-info">{{ house?.constructionYear }}</p>
+              <p class="details-info">Built in {{ house?.constructionYear }}</p>
             </div>
             <div>
               <span class="house-details-icons"

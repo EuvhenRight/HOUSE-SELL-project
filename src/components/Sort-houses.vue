@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useHousesStore } from '../stores/store'
-import iconArrow from '../assets/icons/icon-arrow.svg'
+import iconArrow from '../assets/icons/ic_up-arrow.svg'
 
 const houseStore = useHousesStore()
 </script>
@@ -15,12 +15,12 @@ const houseStore = useHousesStore()
       >
         Price
         <img
-          v-if="houseStore.ascendingOrder"
-          class="icon-arrow"
+          v-if="houseStore.changePrice"
+          class="icon-arrow rotate"
           :src="iconArrow"
           alt="Arrow Icon"
         />
-        <img v-else class="icon-arrow rotate" :src="iconArrow" alt="Arrow Icon" />
+        <img v-else class="icon-arrow" :src="iconArrow" alt="Arrow Icon" />
       </li>
       <li
         @click="houseStore.sortHousesBySize"
@@ -29,12 +29,12 @@ const houseStore = useHousesStore()
       >
         Size
         <img
-          v-if="houseStore.ascendingOrder"
-          class="icon-arrow"
+          v-if="houseStore.changeSize"
+          class="icon-arrow rotate"
           :src="iconArrow"
           alt="Arrow Icon"
         />
-        <img v-else class="icon-arrow rotate" :src="iconArrow" alt="Arrow Icon" />
+        <img v-else class="icon-arrow" :src="iconArrow" alt="Arrow Icon" />
       </li>
     </ul>
   </div>
@@ -84,6 +84,10 @@ li.active-list {
 .rotate {
   transform: rotate(180deg);
   transition: transform 0.3s ease;
+}
+.icon-arrow {
+  margin-left: 5px;
+  width: 15px;
 }
 
 @media (max-width: 806px) {

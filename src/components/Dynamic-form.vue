@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 import { ErrorMessage, Field, Form } from 'vee-validate'
 import { validationFieldsSchema } from '../utils/validation-schema'
 import { HouseListing } from '../types/types'
-import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 import uploadIcon from '../assets/icons/ic_upload@3x.png'
 import clearWhiteIcon from '../assets/icons/ic_clear_white@3x.png'
@@ -11,13 +11,14 @@ import clearWhiteIcon from '../assets/icons/ic_clear_white@3x.png'
 const props = defineProps<{ currentValues: HouseListing }>()
 const emit = defineEmits(['on-submit'])
 
-const router = useRouter()
-
+const route = useRoute()
 const newImageLink = ref<string | null>(null)
 const newImage = ref<HTMLInputElement | null>(null)
 // need to compute because of v-model
 const currentValuesCopy = computed(() => props.currentValues)
-const currentRoute = router.currentRoute.value.name
+
+const currentRoute = route.name === 'editListing'
+
 const handleSubmit = (values) => {
   emit('on-submit', values)
 }
@@ -28,7 +29,11 @@ const uploadImage = (e) => {
     newImageLink.value = URL.createObjectURL(file)
   }
 }
+
 const removeImage = () => {
+  if (newImage?.value) {
+    newImage.value.value = '' // Resetting the input file field
+  }
   newImage.value = null
   newImageLink.value = null
   currentValuesCopy.value.image = null
@@ -39,11 +44,10 @@ const removeImage = () => {
   <Form
     @submit="handleSubmit"
     :validation-schema="validationFieldsSchema"
-    :initial-values="currentValues"
+    :initial-values="currentValuesCopy"
     class="dynamic-form"
     v-slot="{ meta, setFieldValue, errors }"
   >
-    {{ console.log('Set Field Value:', setFieldValue) }}
     <!--STREET NAME INPUT-->
     <div class="container-input" id="streetName_g">
       <label for="streetName">Street Name*</label>
@@ -110,12 +114,18 @@ const removeImage = () => {
     <!-- UPLOAD IMAGE INPUT -->
     <div class="container-input" id="post-image_g">
       <label for="image">Upload picture (PNG or JPG)*</label>
-      <Field id="image" name="image" type="file" v-slot="{ field }">
+      <Field
+        id="image"
+        name="image"
+        type="file"
+        v-slot="{ field }"
+        v-model="currentValuesCopy.image"
+      >
         <input
           name="image"
           type="file"
-          hidden
           accept=".png,.jpg"
+          hidden
           @change="uploadImage"
           ref="newImage"
           v-bind="field"
@@ -132,7 +142,7 @@ const removeImage = () => {
         <div style="position: relative">
           <img
             v-if="currentValues.image && !newImageLink ? currentValues.image : newImageLink"
-            :src="(currentValues.image ?? '') || (newImageLink ?? '')"
+            :src="(newImageLink ?? '') || (currentValues.image ?? '')"
             class="uploaded-image"
             alt="Upload"
           />
@@ -249,7 +259,7 @@ const removeImage = () => {
       :disabled="!meta.valid"
       type="submit"
     >
-      {{ currentRoute === 'editListing' ? 'SAFE' : 'POST' }}
+      {{ currentRoute ? 'SAFE' : 'POST' }}
     </button>
   </Form>
 </template>
