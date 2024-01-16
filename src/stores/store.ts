@@ -14,7 +14,8 @@ export const useHousesStore = defineStore('HouseStore', {
       newHouse: {} as HouseListing | null, // NEW HOUSE STATE
       editHouse: {} as HouseListing | null, // EDIT HOUSE STATE
       changePrice: true as boolean, // CHANGE PRICE STATE
-      changeSize: true as boolean // CHANGE SIZE STATE
+      changeSize: true as boolean, // CHANGE SIZE STATE
+      spinnerLoaderTime: true as boolean // SPINNER LOADER TIME
     }
   },
   getters: {
@@ -23,7 +24,6 @@ export const useHousesStore = defineStore('HouseStore', {
     filteredHouses: (state) => {
       const searchData = state.housesData.filter((house) => {
         const searchQueryLower = state.searchValue || ''.toLowerCase()
-
         const matchesCondition = (property: string, value: HouseData[keyof HouseData]) => {
           return value.toString().toLowerCase().includes(searchQueryLower)
         }
@@ -44,20 +44,24 @@ export const useHousesStore = defineStore('HouseStore', {
     // ACTIONS FOR HOUSES
     async getDataHouses() {
       try {
+        this.spinnerLoaderTime = true
         const response = await apiService<HouseData[]>(import.meta.env.VITE_API_MAIN_URL, 'GET')
         this.housesData = response.data || []
         this.sortHousesByPrice()
+        this.spinnerLoaderTime = false
       } catch (error) {
         console.error(error)
       }
     },
     async getHouseById(id: number) {
       try {
+        this.spinnerLoaderTime = true
         const response = await apiService<HouseData>(
           `${import.meta.env.VITE_API_MAIN_URL}/${id}`,
           'GET'
         )
         this.houseData = response.data || null
+        this.spinnerLoaderTime = false
       } catch (error) {
         console.error('Error in API request:', error)
       }

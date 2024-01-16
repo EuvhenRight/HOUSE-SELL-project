@@ -99,11 +99,16 @@ const submitForm = async (values) => {
   }
 }
 const handleSubmit = (values: HouseListing) => {
+  housesStore.spinnerLoaderTime = true
   submitForm(values)
+  housesStore.spinnerLoaderTime = false
 }
 </script>
 <template>
-  <div class="background-edit-listing">
+  <div v-if="housesStore.spinnerLoaderTime">
+    <Spinner />
+  </div>
+  <div class="background-edit-listing" v-else>
     <div class="container-edit-listing-view">
       <div class="wrapper-back-to-pages">
         <BackToPages />

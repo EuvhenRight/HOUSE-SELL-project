@@ -9,6 +9,7 @@ import sizeIcon from '../assets/icons/ic_size@3x.png'
 import BackToPages from '../components/Back-to-pages.vue'
 import CardItemRecommended from '../components/Card-item-recommended.vue'
 import EditDeleteButtons from '../components/Edit-delete-buttons.vue'
+import Spinner from '../components/Spinner-c.vue'
 
 import { useRoute } from 'vue-router'
 import { useHousesStore } from '../stores/store'
@@ -34,7 +35,10 @@ function convertPrice(price: number) {
 </script>
 
 <template>
-  <div class="container-house-details">
+  <div v-if="housesStore.spinnerLoaderTime">
+    <Spinner />
+  </div>
+  <div class="container-house-details" v-else>
     <div class="wrapper-house-details">
       <BackToPages />
       <div v-for="(house, index) in data" :key="index" class="house-details-main">
@@ -44,7 +48,6 @@ function convertPrice(price: number) {
             <div class="house-address">
               {{ house?.location.street }} {{ house?.location.houseNumber }}
               {{
-                // FILL FORM NUMBERADDITION, BUT I GET FROM BACKEND HOUSENUMBERADDITION
                 house?.location.houseNumberAddition === 'undefined'
                   ? ''
                   : house?.location.houseNumberAddition
@@ -65,7 +68,7 @@ function convertPrice(price: number) {
                 <p class="details-info">{{ convertPrice(house?.price) }}</p></span
               >
               <span><img :src="sizeIcon" alt="Size Icon" class="house-details-icons" /></span>
-              <p class="details-info">{{ house?.size }}</p>
+              <p class="details-info">{{ house?.size }} m2</p>
               <span
                 ><img :src="constructionIcon" alt="Construction Icon" class="house-details-icons"
               /></span>

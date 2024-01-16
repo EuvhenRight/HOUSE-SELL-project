@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 
 import BackToPages from '../components/Back-to-pages.vue'
 import DynamicForm from '../components/Dynamic-form.vue'
+import Spinner from '../components/Spinner-c.vue'
 
 import type { HouseListing } from '../types/types'
 
@@ -67,12 +68,17 @@ const submitForm = async (values) => {
     console.error('Error during form submission:', error)
   }
 }
-const handleSubmit = (values) => {
+const handleSubmit = (values: HouseListing) => {
+  housesStore.spinnerLoaderTime = true
   submitForm(values)
+  housesStore.spinnerLoaderTime = false
 }
 </script>
 <template>
-  <div class="background-listing">
+  <div v-if="housesStore.spinnerLoaderTime">
+    <Spinner />
+  </div>
+  <div v-else class="background-listing">
     <div class="container-listing-view">
       <div class="wrapper-back-to-pages">
         <BackToPages />

@@ -21,9 +21,19 @@ function convertPrice(price: number) {
         <div class="info-block">
           <img class="card-item-img" :src="props.house?.image" alt="imageIcon" />
           <div class="container-card-info">
-            <div class="house-location">{{ props.house?.location.street }}</div>
+            <div class="house-location">
+              {{ props.house?.location.street }}
+              {{ props.house?.location.houseNumber }}
+              {{
+                props.house?.location.houseNumberAddition === 'undefined'
+                  ? ''
+                  : props.house?.location.houseNumberAddition
+              }}
+            </div>
             <div class="price-info">€ {{ convertPrice(props.house?.price) }}</div>
-            <div class="zip-code-info">{{ props.house?.location.zip }}</div>
+            <div class="zip-code-info">
+              {{ props.house?.location.zip }} {{ props.house?.location.city }}
+            </div>
             <div class="room-info">
               <span class="icons"
                 ><img :src="bedIcon" alt="Bed Icon" />
@@ -35,7 +45,7 @@ function convertPrice(price: number) {
               >
               <span class="icons"
                 ><img :src="sizeIcon" alt="Size Icon" />
-                <p>{{ props.house?.size }}</p></span
+                <p>{{ props.house?.size }} m2</p></span
               >
             </div>
           </div>

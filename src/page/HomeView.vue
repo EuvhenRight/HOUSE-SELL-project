@@ -9,6 +9,7 @@ import CardItem from '../components/Card-item.vue'
 import CreateNewBtn from '../components/Create-new-btn.vue'
 import SearchBar from '../components/Search-bar.vue'
 import SortHouses from '../components/Sort-houses.vue'
+import Spinner from '../components/Spinner-c.vue'
 
 const housesStore = useHousesStore()
 // REACTIVE DATA
@@ -59,23 +60,28 @@ const resultString = computed(() =>
         </li>
       </ul>
     </section>
+    <div v-if="housesStore.spinnerLoaderTime">
+      <Spinner />
+    </div>
     <!-- SEARCH VIEW WHEN SEARCHING -->
-    <section v-if="housesStore.searchValue" class="container-home-search">
-      <div v-if="housesStore.searchHousesCount > 0">
-        <h2>{{ resultString }}</h2>
-        <ul class="list-houses" v-auto-animate>
-          <li v-for="(house, index) in housesStore.searchData" :key="index">
-            <CardItem :house="house" />
-          </li>
-        </ul>
-      </div>
-      <!-- EMPTY HOUSES VIEW -->
-      <div v-if="housesStore.searchHousesCount === 0" class="container-empty-houses">
-        <img :src="emptyHousesImg" alt="Not Found" />
-        <p>No results found</p>
-        <p>Please try another keyword.</p>
-      </div>
-    </section>
+    <div v-else>
+      <section v-if="housesStore.searchValue" class="container-home-search">
+        <div v-if="housesStore.searchHousesCount > 0">
+          <h2>{{ resultString }}</h2>
+          <ul class="list-houses" v-auto-animate>
+            <li v-for="(house, index) in housesStore.searchData" :key="index">
+              <CardItem :house="house" />
+            </li>
+          </ul>
+        </div>
+        <!-- EMPTY HOUSES VIEW -->
+        <div v-if="housesStore.searchHousesCount === 0" class="container-empty-houses">
+          <img :src="emptyHousesImg" alt="Not Found" />
+          <p>No results found</p>
+          <p>Please try another keyword.</p>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
