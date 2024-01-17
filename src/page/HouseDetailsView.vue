@@ -122,7 +122,6 @@ function convertPrice(price: number) {
   color: var(--text-secondary);
 }
 .house-details-img {
-  width: 800px;
   height: 550px;
   object-fit: cover;
   object-position: center;

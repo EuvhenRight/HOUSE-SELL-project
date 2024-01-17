@@ -63,7 +63,13 @@ const navigationRoutes: headerMobileLinks[] = [
     width: 2rem;
   }
 }
-@media screen and (max-width: 992px) {
+@media (min-width: 481px) and (max-width: 992px) {
+  .header-nav-mobile {
+    height: 12vh;
+  }
+}
+
+@media screen and (max-width: 480px) {
   .header-nav-mobile {
     height: 10vh;
   }
