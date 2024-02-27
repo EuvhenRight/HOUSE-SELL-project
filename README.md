@@ -6,10 +6,15 @@ Pages
 The project consists of five pages:
 
 Houses Page > This page provides users with a list of houses, offering features such as searching and sorting.
+
 About Page > The About page provides users with information about the Real Estate project.
+
 House Details Page > Users can access detailed information about a specific house on this page.
+
 Create House Page > This page enables users to create a new house listing.
+
 Edit House Page > Users can use this page to edit an existing house listing that they have created.
+
 Delete House Page > Before delete page, you will see modal ALERT!
 
 ## House_Page
@@ -34,14 +39,21 @@ Delete House Page > Before delete page, you will see modal ALERT!
 
 ## Response_design
 
+### Mobile
+
 ![Response_design](/public/Mobile-1.png)
 ![Response_design](/public/Mobile-2.png)
+
+### Tablet
+
 ![Response_design](/public/Tablet-1.png)
 ![Response_design](/public/Tablet-2.png)
 
 ## Code Structure
 
-VueShop-Sneakers
+```
+
+Real Estate
 │
 ├── public
 │ └── sneakers
@@ -64,7 +76,7 @@ VueShop-Sneakers
 │ ├── Utils
 │ │ ├── monitor-size.ts
 │ │ ├── validation-schema.ts  
- │ │ └── api-service.ts
+│ │ └── api-service.ts
 │ │
 │ ├── Back-to-pages.vue
 │ ├── Card-item-recommended.vue
@@ -80,6 +92,8 @@ VueShop-Sneakers
 │
 ├── App.vue
 └── main.ts
+
+```
 
 ## Tech Stack
 
@@ -98,4 +112,6 @@ VueShop-Sneakers
   </a>
   <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer">
     <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" alt="TypeScript" width="100" height="100" />
+    <a href="https://pinia.vuejs.org/" target="_blank" rel="noreferrer">
+    <img src="https://pinia.vuejs.org/logo.svg" alt="Pinia" width="100" height="100" />
 </p>
