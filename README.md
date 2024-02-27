@@ -1,46 +1,101 @@
 # DTT-project
 
-This template should help get you started developing with Vue 3 in Vite.
+## Vue.js Project - Real Estate
 
-## Recommended IDE Setup
+Pages
+The project consists of five pages:
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Houses Page > This page provides users with a list of houses, offering features such as searching and sorting.
+About Page > The About page provides users with information about the Real Estate project.
+House Details Page > Users can access detailed information about a specific house on this page.
+Create House Page > This page enables users to create a new house listing.
+Edit House Page > Users can use this page to edit an existing house listing that they have created.
+Delete House Page > Before delete page, you will see modal ALERT!
 
-## Type Support for `.vue` Imports in TS
+## House_Page
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+![House_Page](/public/Laptop-1.png)
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+## About_Page
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+![About_Page](/public/Laptop-about.png)
 
-## Customize configuration
+## Create_House_Page
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+![Create_House_Page](/public/Laptop-create.png)
 
-## Project Setup
+## Edit_House_Page
 
-```sh
-npm install
-```
+![Edit_House_Page](/public/Laptop-edit.png)
 
-### Compile and Hot-Reload for Development
+## Delete_House_Page
 
-```sh
-npm run dev
-```
+![Delete_House_Page](/public/Laptop-delete.png)
 
-### Type-Check, Compile and Minify for Production
+## Response_design
 
-```sh
-npm run build
-```
+![Response_design](/public/Mobile-1.png)
+![Response_design](/public/Mobile-2.png)
+![Response_design](/public/Tablet-1.png)
+![Response_design](/public/Tablet-2.png)
 
-### Lint with [ESLint](https://eslint.org/)
+## Code Structure
 
-```sh
-npm run lint
-```
+VueShop-Sneakers
+│
+├── public
+│ └── sneakers
+│
+└── src
+├── components
+│ ├── pages
+│ │ ├── AboutView.vue
+│ │ ├── EditListingView.vue
+│ │ ├── HomeView.vue
+│ │ ├── HouseDetailsView.vue
+│ │ └── NewListingView.vue
+│ │
+│ ├── types
+│ │ └── types.ts
+│ ├── Router
+│ │ └── index.ts
+│ ├── Stores
+│ │ └── store.ts
+│ ├── Utils
+│ │ ├── monitor-size.ts
+│ │ ├── validation-schema.ts  
+ │ │ └── api-service.ts
+│ │
+│ ├── Back-to-pages.vue
+│ ├── Card-item-recommended.vue
+│ ├── Card-item.vue
+│ ├── Create-new-btn.vue
+│ ├── Delete-listing-pop-up.vue
+│ ├── Edit-delete-buttons.vue
+│ ├── Header-c.vue
+│ ├── Header-mobile.vue
+│ ├── Search-bar.vue
+│ ├── Sort-houses.vue
+│ └── Spinner.vue
+│
+├── App.vue
+└── main.ts
+
+## Tech Stack
+
+<p align="left">
+  <a href="https://vuejs.org/" target="_blank" rel="noreferrer">
+    <img src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*Da7-kOCzpKfrWPDkk4luSQ.png" alt="Vue" width="100" height="100"/>
+  </a>
+  <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">
+    <img src="https://i.gyazo.com/967cdb89a3774e1f3e3ca6cf6baee755.png" alt="Tailwind" width="100" height="100"/>
+  </a>
+  <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer">
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="HTML5" width="100" height="100"/>
+  </a>
+  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer">
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript" width="100" height="100" />
+  </a>
+  <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" alt="TypeScript" width="100" height="100" />
+</p>
