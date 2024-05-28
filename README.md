@@ -1,4 +1,6 @@
-# HOUSE-SELL-project
+# SALES-OF-HOUSES-project
+
+Public
 
 ## Vue.js Project - Real Estate
 
